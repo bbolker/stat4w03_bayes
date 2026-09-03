@@ -1,0 +1,22 @@
+---
+title: "Course materials for reading course (Bayesian stats)"
+bibliography: "bayes.bib"
+output_format: md_document
+csl: harvard-cite-them-right.csl
+---
+
+The main text for the course is 
+
+
+## materials
+
+##  References
+ 
+::: {#refs}
+:::
+
+---
+
+Last updated: `r Sys.time()`
+	
+

@@ -1,0 +1,17 @@
+---
+title: "STATS 4W03 Fall 2026: Bayesian statistics"
+author: "Ben Bolker"
+date: "3 September 2026"
+bibliography: bayes.bib
+csl: harvard-cite-them-right.csl
+---
+
+**Participants:** Sarah Holjak (`holjaks`), Tony Xu (`xua32`), Andrea Mitchel (`mitcha39`)
+
+**Textbook:** @hoffFirstCourseBayesian2009, with supplemental readings from other texts (e.g. @gelmanData2006, @gelmanBayesianDataAnalysis2013, @gelmanBayesianWorkflow2026)
+
+**Course activities**: textbook readings; other readings from the primary (research) and secondary (pedagogical/introductory) literature on Bayesian statistics. Discussion, with pre-submitted discussion questions. Exercises from end-of-chapter problems from the textbook. Short term paper/sample data analysis (5-10 pages) using Bayesian statistics.  Weekly in-person meetings (90 minutes).
+
+**Assessment**: exercises and chapter summaries/discussion questions (45%); term paper (45%); participation in weekly discussion (10%).
+
+## References
