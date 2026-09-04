@@ -5,10 +5,7 @@ output_format: md_document
 csl: harvard-cite-them-right.csl
 ---
 
-The main text for the course is 
-
-
-## materials
+The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
 
 ##  References
  
