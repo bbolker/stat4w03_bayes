@@ -7,6 +7,17 @@ csl: harvard-cite-them-right.csl
 
 The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
 
+## Miscellaneous refs/links
+
+### priors
+
+@cromeNovel1996, @carpenterComputational2017, @gelmanPrior2006, @lewandowskiGenerating2009a, @sarmaPrior2020, @bannerUse2020, @lemoineMoving2019, @kallioinenDetecting2022
+* Pinheiro and Bates on covariance matrix parameterizations: @pinheiroUnconstrainedParametrizationsVariancecovariance1996a
+* Pima Indians: @radinDigitalNativesHow2017,smith-morrisReducingDiabetesIndian2004
+* missing data: @vanbuuren2018, @harrell2015
+* visualizing distributions of covariance matrices: @tokudaVisualizingDistributionsCovariance2025
+* high dimensions/concentration of measure?
+
 ##  References
  
 ::: {#refs}

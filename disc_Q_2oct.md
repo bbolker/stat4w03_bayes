@@ -2,7 +2,7 @@
 
 p. 77 Q: this is indeed a _continuous mixture model_ (sometimes called a _scale mixture_). https://www.sumsar.net/blog/2013/12/t-as-a-mixture-of-normals/ 
 
-Improper priors are fine, provided you have enough data, but e.g. they make prior predictive sampling impossible. They are "uninformative" only on the original scale.
+Improper priors are fine, provided you have enough data, but e.g. they make prior predictive sampling impossible. They are "uninformative" only on the original scale.`
 
 (derivations in 5.5)
 
@@ -21,14 +21,11 @@ This is pretty hairy. "Reasonable" has to do with things like the probability $f
 
 Robert, Christian P. 2007. The Bayesian Choice: From Decision-Theoretic Foundations to Computational Implementation. 2nd ed. Springer Texts in Statistics. Springer.
 
-
-
  C6: on page 96 at the beginning of section 6.5, we are given a dependent sequence of vectors, and told they are conditionally independent, and therefore that sequence is a markov chain. Could you go over how they reached that conclusion, as I haven't been able to understand it?
 
 definition of Markov chain
 
 ## Mitchell
-
 
 My question for discussion is how do we choose κ at the beginning? Since
 κ determines how much weight the prior has relative to the data, is
