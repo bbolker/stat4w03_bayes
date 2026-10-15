@@ -3,19 +3,18 @@ link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
 
 ## Miscellaneous refs/links
 
-### priors
-
-Crome, Thomas and Moore (1996), Carpenter (2017), Gelman (2006),
-Lewandowski, Kurowicka and Joe (2009), Sarma and Kay (2020), Banner,
-Irvine and Rodhouse (2020), Lemoine (2019), Kallioinen *et al.* (2022)
-\* Pinheiro and Bates on covariance matrix parameterizations: Pinheiro
-and Bates (1996) \* Pima Indians: Radin
-(2017),smith-morrisReducingDiabetesIndian2004 \* missing data: van
-Buuren (2018), Harrell Jr. (2015) \* visualizing distributions of
-covariance matrices: Tokuda *et al.* (2025) \* high
-dimensions/concentration of measure?
-
-## References
+-   Priors: Crome, Thomas and Moore (1996), Carpenter (2017), Gelman
+    (2006), Lewandowski, Kurowicka and Joe (2009), Sarma and Kay (2020),
+    Banner, Irvine and Rodhouse (2020), Lemoine (2019), Kallioinen *et
+    al.* (2022)
+-   Pinheiro and Bates on covariance matrix parameterizations: Pinheiro
+    and Bates (1996)
+-   Pima Indians: Radin (2017),smith-morrisReducingDiabetesIndian2004
+-   missing data: van Buuren (2018), Harrell Jr. (2015)
+-   visualizing distributions of covariance matrices: Tokuda *et al.*
+    (2025)
+-   high dimensions/concentration of measure?
+-   Greenland and Oke (2026) \## References
 
 Banner, K.M., Irvine, K.M. and Rodhouse, T.J. (2020) ‘The use of
 Bayesian priors in Ecology: The good, the bad and the not great’,
@@ -36,6 +35,10 @@ Gelman, A. (2006) ‘Prior distributions for variance parameters in
 hierarchical models (comment on article by Browne and Draper)’,
 *Bayesian Analysis*, 1(3), pp. 515–534.
 doi:[10.1214/06-BA117A](https://doi.org/10.1214/06-BA117A).
+
+Greenland, S. and Oke, J. (2026) ‘Dangers of Bayesian analyses and how
+to address them’. arXiv.
+doi:[10.48550/arXiv.2609.14082](https://doi.org/10.48550/arXiv.2609.14082).
 
 Harrell Jr., F.E. (2015) *Regression Modeling Strategies: With
 Applications to Linear Models, Logistic and Ordinal Regression, and
@@ -84,4 +87,4 @@ Chapman & Hall/CRC (Interdisciplinary Statistics Series). Available at:
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-10-08 10:19:47.076826
+Last updated: 2026-10-15 12:14:27.397992

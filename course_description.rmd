@@ -6,7 +6,7 @@ bibliography: bayes.bib
 csl: harvard-cite-them-right.csl
 ---
 
-**Participants:** Sarah Holjak (`holjaks`), Tony Xu (`xua32`), Andrea Mitchel (`mitcha39`)
+**Participants:** Sarah Holjak (`holjaks`), Tony Xu (`xua32`), Andrea Mitchell (`mitcha39`), Spring Fu (`fus26`), James Macdonald (`macdoj79`)
 
 **Textbook:** @hoffFirstCourseBayesian2009, with supplemental readings from other texts (e.g. @gelmanData2006, @gelmanBayesianDataAnalysis2013, @gelmanBayesianWorkflow2026)
 
