@@ -2362,12 +2362,13 @@ window.Quarto = {
   <li><a href="#julia-1" id="toc-julia-1" class="nav-link" data-scroll-target="#julia-1"><span class="header-section-number">4.4</span> Julia</a></li>
   </ul></li>
   <li><a href="#category-4-other-inference-strategies-and-general-purpose-ppls" id="toc-category-4-other-inference-strategies-and-general-purpose-ppls" class="nav-link" data-scroll-target="#category-4-other-inference-strategies-and-general-purpose-ppls"><span class="header-section-number">5</span> Category 4: other inference strategies and general-purpose PPLs</a></li>
-  <li><a href="#sec-summary" id="toc-sec-summary" class="nav-link" data-scroll-target="#sec-summary"><span class="header-section-number">6</span> Summary table</a></li>
-  <li><a href="#same-model-several-languages" id="toc-same-model-several-languages" class="nav-link" data-scroll-target="#same-model-several-languages"><span class="header-section-number">7</span> Same model, several languages</a></li>
-  <li><a href="#existing-reviews-and-comparisons" id="toc-existing-reviews-and-comparisons" class="nav-link" data-scroll-target="#existing-reviews-and-comparisons"><span class="header-section-number">8</span> Existing reviews and comparisons</a></li>
-  <li><a href="#practical-advice-for-this-course" id="toc-practical-advice-for-this-course" class="nav-link" data-scroll-target="#practical-advice-for-this-course"><span class="header-section-number">9</span> Practical advice (for this course)</a></li>
-  <li><a href="#sec-numbers" id="toc-sec-numbers" class="nav-link" data-scroll-target="#sec-numbers"><span class="header-section-number">10</span> Appendix: usage numbers</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">11</span> References</a></li>
+  <li><a href="#sec-rsamplers" id="toc-sec-rsamplers" class="nav-link" data-scroll-target="#sec-rsamplers"><span class="header-section-number">6</span> Aside: samplers for log-posterior functions written in R</a></li>
+  <li><a href="#sec-summary" id="toc-sec-summary" class="nav-link" data-scroll-target="#sec-summary"><span class="header-section-number">7</span> Summary table</a></li>
+  <li><a href="#same-model-several-languages" id="toc-same-model-several-languages" class="nav-link" data-scroll-target="#same-model-several-languages"><span class="header-section-number">8</span> Same model, several languages</a></li>
+  <li><a href="#existing-reviews-and-comparisons" id="toc-existing-reviews-and-comparisons" class="nav-link" data-scroll-target="#existing-reviews-and-comparisons"><span class="header-section-number">9</span> Existing reviews and comparisons</a></li>
+  <li><a href="#practical-advice-for-this-course" id="toc-practical-advice-for-this-course" class="nav-link" data-scroll-target="#practical-advice-for-this-course"><span class="header-section-number">10</span> Practical advice (for this course)</a></li>
+  <li><a href="#sec-numbers" id="toc-sec-numbers" class="nav-link" data-scroll-target="#sec-numbers"><span class="header-section-number">11</span> Appendix: usage numbers</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">12</span> References</a></li>
   </ul>
 </nav>
 </div>
@@ -2414,7 +2415,7 @@ window.Quarto = {
 <li><strong>Languages designed around Hamiltonian Monte Carlo (HMC)</strong> (Stan and its relatives, plus the “differentiable” PPLs in Python/Julia/R).</li>
 <li><strong>Other inference strategies and general-purpose PPLs</strong> (tempering, SMC, message passing, Laplace/INLA, programmable inference).</li>
 </ol>
-<p>The categories overlap. NIMBLE does HMC as well as Gibbs, <code>ulam</code> is a front end to Stan, and Pigeons.jl can sample Stan or Turing models. The summary table in <a href="#sec-summary" class="quarto-xref">Section 6</a> gives the bird’s-eye view.</p>
+<p>The categories overlap. NIMBLE does HMC as well as Gibbs, <code>ulam</code> is a front end to Stan, and Pigeons.jl can sample Stan or Turing models. The summary table in <a href="#sec-summary" class="quarto-xref">Section 7</a> gives the bird’s-eye view.</p>
 <section id="axes-of-comparison" class="level3" data-number="1.1">
 <h3 data-number="1.1" class="anchored" data-anchor-id="axes-of-comparison"><span class="header-section-number">1.1</span> Axes of comparison</h3>
 <p><strong>Inference engine.</strong> The algorithm largely decides what kinds of models a tool handles well:</p>
@@ -2432,7 +2433,7 @@ window.Quarto = {
 <li><strong>Formula interfaces</strong> (<code>brms</code>, <code>rstanarm</code>, Bambi, <code>MCMCglmm</code>, INLA) hide the model code completely behind an <code>lme4</code>-style formula. <code>brms</code> then <em>generates</em> Stan code, which you can inspect with <code>stancode()</code>.</li>
 </ul>
 <p><strong>Maturity and support.</strong> Below I note when each tool was first released, whether it is actively developed (judged from the latest release and GitHub activity as of October 2026), and who maintains it (single developer, academic group, or large community or company).</p>
-<p><strong>Usage.</strong> Usage is hard to measure. I use CRAN downloads (last 30 days, RStudio mirror only), PyPI downloads (last month) and GitHub stars, all collected 24 October 2026 (see <a href="#sec-numbers" class="quarto-xref">Section 10</a>), and bin them coarsely: ★★★ = widely used, ★★ = substantial user community, ★ = niche or specialist. Download counts are inflated for packages that other popular packages depend on. For example, <code>prophet</code> pulls in <code>rstan</code> and <code>cmdstanpy</code>.</p>
+<p><strong>Usage.</strong> Usage is hard to measure. I use CRAN downloads (last 30 days, RStudio mirror only), PyPI downloads (last month) and GitHub stars, all collected 24 October 2026 (see <a href="#sec-numbers" class="quarto-xref">Section 11</a>), and bin them coarsely: ★★★ = widely used, ★★ = substantial user community, ★ = niche or specialist. Download counts are inflated for packages that other popular packages depend on. For example, <code>prophet</code> pulls in <code>rstan</code> and <code>cmdstanpy</code>.</p>
 </section>
 </section>
 <section id="category-1-restricted-model-classes-formula-interfaces" class="level2" data-number="2">
@@ -2487,7 +2488,7 @@ window.Quarto = {
 </section>
 <section id="other-gibbs-flavoured-tools" class="level3" data-number="3.3">
 <h3 data-number="3.3" class="anchored" data-anchor-id="other-gibbs-flavoured-tools"><span class="header-section-number">3.3</span> Other Gibbs-flavoured tools</h3>
-<p><code>LaplacesDemon</code> (R, many MCMC algorithms, procedural log-posterior function), <code>MCMCglmm</code> (above) and the many model-specific Gibbs samplers in individual R packages (e.g. <code>spBayes</code>, <code>BayesLogit</code>) fill in the rest. PyMC’s compound steps also give it Gibbs-style updates for discrete variables.</p>
+<p><code>LaplacesDemon</code> (R, many MCMC algorithms applied to a log-posterior function you write; see <a href="#sec-rsamplers" class="quarto-xref">Section 6</a>), <code>MCMCglmm</code> (above) and the many model-specific Gibbs samplers in individual R packages (e.g. <code>spBayes</code>, <code>BayesLogit</code>) fill in the rest. PyMC’s compound steps also give it Gibbs-style updates for discrete variables.</p>
 </section>
 </section>
 <section id="category-3-languages-built-around-hamiltonian-monte-carlo" class="level2" data-number="4">
@@ -2533,8 +2534,69 @@ window.Quarto = {
 <li><strong>Dormant or superseded</strong> (mainly of historical interest): Edward <span class="citation" data-cites="tranEdward2016">(<a href="#ref-tranEdward2016" role="doc-biblioref">Tran <em>et al.</em>, 2016</a>)</span> (folded into TensorFlow Probability / Edward2), Meta’s Bean Machine (archived 2023), Soss.jl (inactive since 2024), WebPPL (inactive since 2024), TuringGLM.jl (archived), WinBUGS/OpenBUGS.</li>
 </ul>
 </section>
-<section id="sec-summary" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="sec-summary"><span class="header-section-number">6</span> Summary table</h2>
+<section id="sec-rsamplers" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="sec-rsamplers"><span class="header-section-number">6</span> Aside: samplers for log-posterior functions written in R</h2>
+<p>These packages are not PPLs: there is no modelling language. You write an ordinary R function that takes a parameter vector and returns the log posterior density (log-likelihood plus log-prior, up to a constant), and the package runs a general-purpose sampler on it. This is the most direct way to do MCMC on a model you have already coded as a likelihood, e.g. for <code>optim()</code> or <code>bbmle</code>. These samplers are adaptive random-walk Metropolis or similar, so they need no gradients. They are fine for models with a handful to a few dozen parameters, but much less efficient than HMC for high-dimensional or strongly correlated posteriors. StanEstimators (Category 3) is the HMC option for an R log-density function.</p>
+<p>Each parameter has to be defined on the whole real line, so constrained parameters must be transformed by hand. For example, sample <span class="math inline">\(\log\tau\)</span> and add the log-Jacobian of the transformation to the log density. Download counts are for the last 30 days as of 24 October 2026 (RStudio CRAN mirror).</p>
+<ul>
+<li><strong><code>MCMCpack::MCMCmetrop1R()</code></strong> <span class="citation" data-cites="martinMCMCpack2011">(<a href="#ref-martinMCMCpack2011" role="doc-biblioref">Martin, Quinn and Park, 2011</a>)</span>. Random-walk Metropolis with a multivariate normal proposal. By default it first maximizes the function with <code>optim()</code> and bases the proposal covariance on the Hessian at the mode, scaled by a user-set <code>tune</code> multiplier (no adaptation during sampling). Simple and robust when the posterior is roughly normal. MCMCpack (since 2004) is mostly a collection of model-specific samplers. Mature; ~24,000 downloads/month, though most are for the canned models.</li>
+<li><strong><code>LaplacesDemon</code></strong> (<a href="https://github.com/LaplacesDemonR/LaplacesDemon">GitHub</a>). Originally written by Byron Hall (Statisticat), now maintained by Henrik Singmann (16.1.8, Feb 2026). A large “complete environment” with about 40 MCMC algorithms selected by the <code>Algorithm</code> argument: adaptive Metropolis variants (AM, DRAM, RAM), slice sampling, t-walk, differential evolution, and HMC/NUTS with finite-difference gradients. Also includes Laplace approximation (<code>LaplaceApproximation()</code>), variational Bayes and iterative quadrature. The model function has to return a list in a specific format, and each algorithm takes its own <code>Specs</code> list. ~9,000 downloads/month.</li>
+<li><strong><code>ramcmc</code></strong> (Jouni Helske; 0.1.2, 2021). Not a complete sampler but a building block. <code>adapt_S()</code> updates the Cholesky factor of the proposal covariance according to Vihola’s robust adaptive Metropolis algorithm <span class="citation" data-cites="viholaRobust2012">(<a href="#ref-viholaRobust2012" role="doc-biblioref">Vihola, 2012</a>)</span>, which adapts the proposal’s shape to reach a target acceptance rate (0.234 by default). You write the Metropolis loop yourself, as in the example below. The C++ headers can also be used from other packages (e.g. <code>bssm</code>). ~2,600 downloads/month.</li>
+<li>Others: <code>mcmc</code> (Charles Geyer; <code>metrop()</code> for random-walk Metropolis, <code>temper()</code> for parallel and serial tempering; ~16,000 downloads/month), <code>adaptMCMC</code> (Vihola’s algorithm in a ready-made <code>MCMC()</code> function), <code>BayesianTools</code> (Florian Hartig; differential-evolution MCMC, DREAM and SMC samplers aimed at ecological process models), <code>fmcmc</code> (a modular framework with interchangeable proposal kernels) and <code>mcmcensemble</code> (the affine-invariant ensemble sampler popularized by Python’s <code>emcee</code>).</li>
+</ul>
+<p>Here are the eight-schools model and priors from the previous section, written as an R function. It uses the non-centred parameterization, with parameter vector <code>p</code> = (μ, log τ, η<sub>1</sub>, …, η<sub>8</sub>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">28.39</span>, <span class="fl">7.94</span>, <span class="sc">-</span><span class="fl">2.75</span>, <span class="fl">6.82</span>, <span class="sc">-</span><span class="fl">0.64</span>, <span class="fl">0.63</span>, <span class="fl">18.01</span>, <span class="fl">12.16</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">14.9</span>, <span class="fl">10.2</span>, <span class="fl">16.3</span>, <span class="fl">11.0</span>, <span class="fl">9.4</span>, <span class="fl">11.4</span>, <span class="fl">10.4</span>, <span class="fl">17.6</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>logpost <span class="ot">&lt;-</span> <span class="cf">function</span>(p, y, sigma) {</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> p[<span class="dv">1</span>]; tau <span class="ot">&lt;-</span> <span class="fu">exp</span>(p[<span class="dv">2</span>]); eta <span class="ot">&lt;-</span> p[<span class="sc">-</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>)]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>    theta <span class="ot">&lt;-</span> mu <span class="sc">+</span> tau <span class="sc">*</span> eta</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">dnorm</span>(mu, <span class="dv">0</span>, <span class="dv">100</span>, <span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>        <span class="fu">dexp</span>(tau, <span class="at">rate =</span> <span class="fl">0.02</span>, <span class="at">log =</span> <span class="cn">TRUE</span>) <span class="sc">+</span> p[<span class="dv">2</span>] <span class="sc">+</span>  <span class="do">## + log-Jacobian of exp()</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(<span class="fu">dnorm</span>(eta, <span class="at">log =</span> <span class="cn">TRUE</span>)) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="fu">sum</span>(<span class="fu">dnorm</span>(y, theta, sigma, <span class="at">log =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>p0 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">mean</span>(y), <span class="fu">log</span>(<span class="dv">10</span>), <span class="fu">rep</span>(<span class="dv">0</span>, <span class="dv">8</span>))  <span class="do">## starting values</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>MCMCpack.</strong> Extra arguments are passed on to the log-posterior function:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> MCMCpack<span class="sc">::</span><span class="fu">MCMCmetrop1R</span>(logpost, <span class="at">theta.init =</span> p0, <span class="at">y =</span> y, <span class="at">sigma =</span> sigma,</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                             <span class="at">mcmc =</span> <span class="dv">20000</span>, <span class="at">burnin =</span> <span class="dv">2000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>LaplacesDemon.</strong> The data have to go in a list that also holds the parameter names, and the model function returns the log posterior along with some other components:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Data <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="at">y =</span> y, <span class="at">sigma =</span> sigma, <span class="at">N =</span> <span class="dv">8</span>,</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">parm.names =</span> <span class="fu">c</span>(<span class="st">&quot;mu&quot;</span>, <span class="st">&quot;log_tau&quot;</span>, <span class="fu">paste0</span>(<span class="st">&quot;eta&quot;</span>, <span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)),</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">mon.names =</span> <span class="st">&quot;tau&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>Model <span class="ot">&lt;-</span> <span class="cf">function</span>(parm, Data) {</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    LP <span class="ot">&lt;-</span> <span class="fu">logpost</span>(parm, Data<span class="sc">$</span>y, Data<span class="sc">$</span>sigma)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">list</span>(<span class="at">LP =</span> LP, <span class="at">Dev =</span> <span class="sc">-</span><span class="dv">2</span> <span class="sc">*</span> LP, <span class="at">Monitor =</span> <span class="fu">exp</span>(parm[<span class="dv">2</span>]),</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">yhat =</span> Data<span class="sc">$</span>y, <span class="at">parm =</span> parm)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> LaplacesDemon<span class="sc">::</span><span class="fu">LaplacesDemon</span>(Model, Data, <span class="at">Initial.Values =</span> p0,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">Iterations =</span> <span class="dv">20000</span>, <span class="at">Algorithm =</span> <span class="st">&quot;AM&quot;</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">Specs =</span> <span class="fu">list</span>(<span class="at">Adaptive =</span> <span class="dv">500</span>, <span class="at">Periodicity =</span> <span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>ramcmc.</strong> A hand-written robust adaptive Metropolis loop:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>n_iter <span class="ot">&lt;-</span> <span class="dv">20000</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">diag</span>(<span class="fu">length</span>(p0))  <span class="do">## Cholesky factor of the proposal covariance</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> p0; lp <span class="ot">&lt;-</span> <span class="fu">logpost</span>(p, y, sigma)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="cn">NA</span>, n_iter, <span class="fu">length</span>(p0))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>n_iter) {</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    u <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="fu">length</span>(p0))</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    prop <span class="ot">&lt;-</span> p <span class="sc">+</span> S <span class="sc">%*%</span> u</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    lp_prop <span class="ot">&lt;-</span> <span class="fu">logpost</span>(prop, y, sigma)</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    acc <span class="ot">&lt;-</span> <span class="fu">min</span>(<span class="dv">1</span>, <span class="fu">exp</span>(lp_prop <span class="sc">-</span> lp))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (<span class="fu">runif</span>(<span class="dv">1</span>) <span class="sc">&lt;</span> acc) { p <span class="ot">&lt;-</span> prop; lp <span class="ot">&lt;-</span> lp_prop }</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    S <span class="ot">&lt;-</span> ramcmc<span class="sc">::</span><span class="fu">adapt_S</span>(S, u, acc, i)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    draws[i, ] <span class="ot">&lt;-</span> p</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With 20,000 iterations, all three give posterior means of about 8 for μ and 6 for τ. The chains are strongly autocorrelated, though (in a test run, the effective sample size for log τ was only about 200–400), so check effective sample sizes (e.g. with <code>coda::effectiveSize()</code> or the <code>posterior</code> package) before trusting these numbers.</p>
+</section>
+<section id="sec-summary" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sec-summary"><span class="header-section-number">7</span> Summary table</h2>
 <p>Spec style: <strong>G</strong> = graphical/declarative; <strong>P</strong> = procedural; <strong>E</strong> = embedded graph-building (host-language code that constructs a graph); <strong>F</strong> = formula interface. Status reflects releases and repository activity as of October 2026.</p>
 <table class="caption-top table">
 <colgroup>
@@ -2795,8 +2857,8 @@ window.Quarto = {
 </tbody>
 </table>
 </section>
-<section id="same-model-several-languages" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="same-model-several-languages"><span class="header-section-number">7</span> Same model, several languages</h2>
+<section id="same-model-several-languages" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="same-model-several-languages"><span class="header-section-number">8</span> Same model, several languages</h2>
 <p>The “eight schools” model <span class="citation" data-cites="gelmanBayesianDataAnalysis2013">(<a href="#ref-gelmanBayesianDataAnalysis2013" role="doc-biblioref">Gelman <em>et al.</em>, 2013</a>)</span> is the smallest interesting hierarchical model. Here is the description of the data, as quoted in Randall Pruim’s <a href="https://rpruim.github.io/s341/S21/from-class/notes/53-Rubins-8-Schools.html">Stat 341 course notes</a> (which cite Gelman et al., Sec. 5.5):</p>
 <blockquote class="blockquote">
 <p>A study was performed for the Educational Testing Service to analyze the effects of special coaching programs for SAT-V (Scholastic Aptitude Test-Verbal) in each of eight high schools. The outcome variable in each study was the score on a special administration of the SAT-V, a standardized multiple choice test administered by the Educational Testing Service and used to help colleges make admissions decisions; the scores can vary between 200 and 800, with mean about 500 and standard deviation about 100. The SAT examinations are designed to be resistant to short-term efforts directed specifically toward improving performance on the test; instead they are designed to reflect knowledge acquired and abilities developed over many years of education. Nevertheless, each of the eight schools in this study considered its short-term coaching program to be very successful at increasing SAT scores. Also, there was no prior reason to believe that any of the eight programs was more effective than any other or that some were more similar in effect to each other than to any other.</p>
@@ -2812,58 +2874,58 @@ window.Quarto = {
   tau ~ dexp(0.02)
 }</code></pre>
 <p><strong>Stan (procedural, blocked, typed).</strong></p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; J;</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[J] y;</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[J] sigma;</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> mu;</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; tau;</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[J] theta;</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  mu ~ normal(<span class="dv">0</span>, <span class="dv">100</span>);</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  tau ~ exponential(<span class="fl">0.02</span>);</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  theta ~ normal(mu, tau);</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  y ~ normal(theta, sigma);   <span class="co">// same as: target += normal_lpdf(y | theta, sigma);</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">data</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="dt">int</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; J;</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[J] y;</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt;[J] sigma;</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">parameters</span> {</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span> mu;</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="dt">real</span>&lt;<span class="kw">lower</span>=<span class="dv">0</span>&gt; tau;</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="dt">vector</span>[J] theta;</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">model</span> {</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  mu ~ normal(<span class="dv">0</span>, <span class="dv">100</span>);</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  tau ~ exponential(<span class="fl">0.02</span>);</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  theta ~ normal(mu, tau);</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  y ~ normal(theta, sigma);   <span class="co">// same as: target += normal_lpdf(y | theta, sigma);</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong><code>brms</code> (formula).</strong></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">brm</span>(y <span class="sc">|</span> <span class="fu">se</span>(sigma) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> school), <span class="at">data =</span> schools,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="fl">0.02</span>), <span class="at">class =</span> sd)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">brm</span>(y <span class="sc">|</span> <span class="fu">se</span>(sigma) <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> (<span class="dv">1</span> <span class="sc">|</span> school), <span class="at">data =</span> schools,</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">prior =</span> <span class="fu">c</span>(<span class="fu">prior</span>(<span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>), <span class="at">class =</span> Intercept),</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">prior</span>(<span class="fu">exponential</span>(<span class="fl">0.02</span>), <span class="at">class =</span> sd)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong><code>ulam</code> (graphical list → Stan).</strong></p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ulam</span>(<span class="fu">alist</span>(</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">~</span> <span class="fu">dnorm</span>(theta[school], sigma),</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    theta[school] <span class="sc">~</span> <span class="fu">dnorm</span>(mu, tau),</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    mu <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="dv">100</span>),</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    tau <span class="sc">~</span> <span class="fu">dexp</span>(<span class="fl">0.02</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>), <span class="at">data =</span> schools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ulam</span>(<span class="fu">alist</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    y <span class="sc">~</span> <span class="fu">dnorm</span>(theta[school], sigma),</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    theta[school] <span class="sc">~</span> <span class="fu">dnorm</span>(mu, tau),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    mu <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="dv">100</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    tau <span class="sc">~</span> <span class="fu">dexp</span>(<span class="fl">0.02</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>), <span class="at">data =</span> schools)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>greta (embedded graph in R).</strong></p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>mu    <span class="ot">&lt;-</span> <span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>tau   <span class="ot">&lt;-</span> <span class="fu">exponential</span>(<span class="fl">0.02</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">normal</span>(mu, tau, <span class="at">dim =</span> J)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">distribution</span>(y) <span class="ot">&lt;-</span> <span class="fu">normal</span>(theta, sigma)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">model</span>(mu, tau, theta)</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> <span class="fu">mcmc</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mu    <span class="ot">&lt;-</span> <span class="fu">normal</span>(<span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>tau   <span class="ot">&lt;-</span> <span class="fu">exponential</span>(<span class="fl">0.02</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>theta <span class="ot">&lt;-</span> <span class="fu">normal</span>(mu, tau, <span class="at">dim =</span> J)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">distribution</span>(y) <span class="ot">&lt;-</span> <span class="fu">normal</span>(theta, sigma)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">model</span>(mu, tau, theta)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>draws <span class="ot">&lt;-</span> <span class="fu">mcmc</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Turing.jl (procedural Julia function).</strong></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@model</span> <span class="kw">function</span> <span class="fu">schools</span>(y, sigma)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">~</span> <span class="fu">Normal</span>(<span class="fl">0</span>, <span class="fl">100</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    tau <span class="op">~</span> <span class="fu">Exponential</span>(<span class="fl">50</span>)    <span class="co"># scale (mean), not rate</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">~</span> <span class="fu">filldist</span>(<span class="fu">Normal</span>(mu, tau), <span class="fu">length</span>(y))</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">~</span> <span class="fu">MvNormal</span>(theta, <span class="fu">Diagonal</span>(sigma <span class="op">.^</span> <span class="fl">2</span>))</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>chain <span class="op">=</span> <span class="fu">sample</span>(<span class="fu">schools</span>(y, sigma), <span class="fu">NUTS</span>(), <span class="fl">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode julia code-with-copy"><code class="sourceCode julia"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="pp">@model</span> <span class="kw">function</span> <span class="fu">schools</span>(y, sigma)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">~</span> <span class="fu">Normal</span>(<span class="fl">0</span>, <span class="fl">100</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    tau <span class="op">~</span> <span class="fu">Exponential</span>(<span class="fl">50</span>)    <span class="co"># scale (mean), not rate</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">~</span> <span class="fu">filldist</span>(<span class="fu">Normal</span>(mu, tau), <span class="fu">length</span>(y))</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    y <span class="op">~</span> <span class="fu">MvNormal</span>(theta, <span class="fu">Diagonal</span>(sigma <span class="op">.^</span> <span class="fl">2</span>))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">end</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>chain <span class="op">=</span> <span class="fu">sample</span>(<span class="fu">schools</span>(y, sigma), <span class="fu">NUTS</span>(), <span class="fl">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>PyMC (embedded graph in Python).</strong></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> schools:</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> pm.Normal(<span class="st">&quot;mu&quot;</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    tau <span class="op">=</span> pm.Exponential(<span class="st">&quot;tau&quot;</span>, <span class="fl">0.02</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> pm.Normal(<span class="st">&quot;theta&quot;</span>, mu, tau, shape<span class="op">=</span>J)</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    pm.Normal(<span class="st">&quot;y&quot;</span>, theta, sigma, observed<span class="op">=</span>y)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    idata <span class="op">=</span> pm.sample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> pm.Model() <span class="im">as</span> schools:</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    mu <span class="op">=</span> pm.Normal(<span class="st">&quot;mu&quot;</span>, <span class="dv">0</span>, <span class="dv">100</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    tau <span class="op">=</span> pm.Exponential(<span class="st">&quot;tau&quot;</span>, <span class="fl">0.02</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    theta <span class="op">=</span> pm.Normal(<span class="st">&quot;theta&quot;</span>, mu, tau, shape<span class="op">=</span>J)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>    pm.Normal(<span class="st">&quot;y&quot;</span>, theta, sigma, observed<span class="op">=</span>y)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>    idata <span class="op">=</span> pm.sample()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="existing-reviews-and-comparisons" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="existing-reviews-and-comparisons"><span class="header-section-number">8</span> Existing reviews and comparisons</h2>
+<section id="existing-reviews-and-comparisons" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="existing-reviews-and-comparisons"><span class="header-section-number">9</span> Existing reviews and comparisons</h2>
 <p>Some documents that already cover parts of this ground:</p>
 <ul>
 <li><span class="citation" data-cites="strumbeljPast2024">Štrumbelj <em>et al.</em> (<a href="#ref-strumbeljPast2024" role="doc-biblioref">2024</a>)</span>, “Past, present and future of software for Bayesian inference” (<em>Statistical Science</em>; <a href="https://projecteuclid.org/journals/statistical-science/volume-39/issue-1/Past-Present-and-Future-of-Software-for-Bayesian-Inference/10.1214/23-STS907.full">open access</a>, <a href="https://sites.stat.columbia.edu/gelman/research/published/Bayesian_software_review-8.pdf">preprint</a>). Its authors include developers of Stan, JAGS, INLA, Blang and Birch. The most authoritative recent overview.</li>
@@ -2881,8 +2943,8 @@ window.Quarto = {
 <li><strong>“Rosetta stones”</strong>: the examples from McElreath’s <em>Statistical Rethinking</em> <span class="citation" data-cites="mcelreathStatistical2020">(<a href="#ref-mcelreathStatistical2020" role="doc-biblioref">McElreath, 2020</a>)</span> translated into other tools. They are a good way to compare syntax on identical models: <a href="https://bookdown.org/content/4857/">brms + tidyverse</a> (Solomon Kurz), <a href="https://github.com/pymc-devs/pymc-resources">PyMC</a>, <a href="https://fehiepsi.github.io/rethinking-numpyro/">NumPyro</a>, <a href="https://github.com/StatisticalRethinkingJulia">Turing.jl</a>.</li>
 </ul>
 </section>
-<section id="practical-advice-for-this-course" class="level2" data-number="9">
-<h2 data-number="9" class="anchored" data-anchor-id="practical-advice-for-this-course"><span class="header-section-number">9</span> Practical advice (for this course)</h2>
+<section id="practical-advice-for-this-course" class="level2" data-number="10">
+<h2 data-number="10" class="anchored" data-anchor-id="practical-advice-for-this-course"><span class="header-section-number">10</span> Practical advice (for this course)</h2>
 <ul>
 <li>For <strong>standard hierarchical regression models</strong>, start with <code>brms</code> (or <code>rstanarm</code> if you want to avoid compilation). Look at the generated Stan code (<code>stancode()</code>) to see what is being fitted.</li>
 <li>When a model doesn’t fit a formula, <strong>write it in Stan</strong> (via <code>cmdstanr</code>). This is the best-documented and best-diagnosed general option. <code>ulam</code> is a gentler on-ramp if you are reading McElreath.</li>
@@ -2891,8 +2953,8 @@ window.Quarto = {
 <li>For <strong>multimodal or otherwise hard posteriors</strong>, or when you need marginal likelihoods, look at Pigeons.jl (which can sample existing Stan or Turing models) or SMC methods.</li>
 </ul>
 </section>
-<section id="sec-numbers" class="level2" data-number="10">
-<h2 data-number="10" class="anchored" data-anchor-id="sec-numbers"><span class="header-section-number">10</span> Appendix: usage numbers</h2>
+<section id="sec-numbers" class="level2" data-number="11">
+<h2 data-number="11" class="anchored" data-anchor-id="sec-numbers"><span class="header-section-number">11</span> Appendix: usage numbers</h2>
 <p>Collected 24 October 2026. CRAN: downloads from the RStudio/Posit CRAN mirror over the previous 30 days (<code>cranlogs</code>). This undercounts in absolute terms but is comparable across packages. PyPI: last-month downloads from <a href="https://pypistats.org">pypistats.org</a>. Both include automated and dependency installs (<code>rstan</code> and <code>cmdstanpy</code> are heavily inflated by <code>prophet</code>). GitHub stars are a rough proxy for developer interest.</p>
 <table class="caption-top table">
 <thead>
@@ -3171,20 +3233,20 @@ window.Quarto = {
 </table>
 <p>To refresh the CRAN numbers:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cranlogs)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;rstan&quot;</span>, <span class="st">&quot;brms&quot;</span>, <span class="st">&quot;rstanarm&quot;</span>, <span class="st">&quot;glmmTMB&quot;</span>, <span class="st">&quot;tmbstan&quot;</span>, <span class="st">&quot;RTMB&quot;</span>, <span class="st">&quot;rjags&quot;</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;R2jags&quot;</span>, <span class="st">&quot;runjags&quot;</span>, <span class="st">&quot;jagsUI&quot;</span>, <span class="st">&quot;nimble&quot;</span>, <span class="st">&quot;greta&quot;</span>, <span class="st">&quot;MCMCglmm&quot;</span>,</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;inlabru&quot;</span>, <span class="st">&quot;R2OpenBUGS&quot;</span>, <span class="st">&quot;R2WinBUGS&quot;</span>, <span class="st">&quot;MCMCpack&quot;</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>dl <span class="ot">&lt;-</span> <span class="fu">cran_downloads</span>(pkgs, <span class="at">when =</span> <span class="st">&quot;last-month&quot;</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">tapply</span>(dl<span class="sc">$</span>count, dl<span class="sc">$</span>package, sum), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(cranlogs)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>pkgs <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;rstan&quot;</span>, <span class="st">&quot;brms&quot;</span>, <span class="st">&quot;rstanarm&quot;</span>, <span class="st">&quot;glmmTMB&quot;</span>, <span class="st">&quot;tmbstan&quot;</span>, <span class="st">&quot;RTMB&quot;</span>, <span class="st">&quot;rjags&quot;</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;R2jags&quot;</span>, <span class="st">&quot;runjags&quot;</span>, <span class="st">&quot;jagsUI&quot;</span>, <span class="st">&quot;nimble&quot;</span>, <span class="st">&quot;greta&quot;</span>, <span class="st">&quot;MCMCglmm&quot;</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>          <span class="st">&quot;inlabru&quot;</span>, <span class="st">&quot;R2OpenBUGS&quot;</span>, <span class="st">&quot;R2WinBUGS&quot;</span>, <span class="st">&quot;MCMCpack&quot;</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>dl <span class="ot">&lt;-</span> <span class="fu">cran_downloads</span>(pkgs, <span class="at">when =</span> <span class="st">&quot;last-month&quot;</span>)</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span>(<span class="fu">tapply</span>(dl<span class="sc">$</span>count, dl<span class="sc">$</span>package, sum), <span class="at">decreasing =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="references" class="level2 unnumbered" data-number="11">
+<section id="references" class="level2 unnumbered" data-number="12">
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">11 References</h2><div id="refs" class="references csl-bib-body" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">12 References</h2><div id="refs" class="references csl-bib-body" role="list">
 <div id="ref-abril-plaPyMC2023" class="csl-entry" role="listitem">
 Abril-Pla, O. <em>et al.</em> (2023) <span>“<span>PyMC</span>: A modern, and comprehensive probabilistic programming framework in <span>Python</span>,”</span> <em>PeerJ Computer Science</em>, 9, p. e1516. doi:<a href="https://doi.org/10.7717/peerj-cs.1516">10.7717/peerj-cs.1516</a>.
 </div>
@@ -3272,6 +3334,9 @@ Lunn, D. <em>et al.</em> (2009) <span>“The <span>BUGS</span> project: Evolutio
 <div id="ref-lunnWinBUGS2000" class="csl-entry" role="listitem">
 Lunn, D.J. <em>et al.</em> (2000) <span>“<span>WinBUGS</span> – a <span>Bayesian</span> modelling framework: Concepts, structure, and extensibility,”</span> <em>Statistics and Computing</em>, 10(4), pp. 325–337. doi:<a href="https://doi.org/10.1023/A:1008929526011">10.1023/A:1008929526011</a>.
 </div>
+<div id="ref-martinMCMCpack2011" class="csl-entry" role="listitem">
+Martin, A.D., Quinn, K.M. and Park, J.H. (2011) <span>“<span>MCMCpack</span>: <span>Markov</span> chain <span>Monte</span> <span>Carlo</span> in <span>R</span>,”</span> <em>Journal of Statistical Software</em>, 42(9). doi:<a href="https://doi.org/10.18637/jss.v042.i09">10.18637/jss.v042.i09</a>.
+</div>
 <div id="ref-mccarthyBayesian2007" class="csl-entry" role="listitem">
 McCarthy, M. (2007) <em>Bayesian methods for ecology</em>. <span>Cambridge, England</span>: <span>Cambridge University Press</span>.
 </div>
@@ -3310,6 +3375,9 @@ Tran, D. <em>et al.</em> (2016) <span>“Edward: A library for probabilistic mod
 </div>
 <div id="ref-vandemeentIntroduction2018" class="csl-entry" role="listitem">
 van de Meent, J.-W. <em>et al.</em> (2018) <span>“An introduction to probabilistic programming.”</span> arXiv. doi:<a href="https://doi.org/10.48550/arXiv.1809.10756">10.48550/arXiv.1809.10756</a>.
+</div>
+<div id="ref-viholaRobust2012" class="csl-entry" role="listitem">
+Vihola, M. (2012) <span>“Robust adaptive <span>Metropolis</span> algorithm with coerced acceptance rate,”</span> <em>Statistics and Computing</em>, 22(5), pp. 997–1008. doi:<a href="https://doi.org/10.1007/s11222-011-9269-5">10.1007/s11222-011-9269-5</a>.
 </div>
 </div></section></div></main>
 <!-- /main column -->

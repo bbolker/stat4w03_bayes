@@ -95,7 +95,7 @@ These tools fit a fixed but broad class of models, typically (generalized) linea
 
 ### Other Gibbs-flavoured tools
 
-`LaplacesDemon` (R, many MCMC algorithms, procedural log-posterior function), `MCMCglmm` (above) and the many model-specific Gibbs samplers in individual R packages (e.g. `spBayes`, `BayesLogit`) fill in the rest. PyMC's compound steps also give it Gibbs-style updates for discrete variables.
+`LaplacesDemon` (R, many MCMC algorithms applied to a log-posterior function you write; see @sec-rsamplers), `MCMCglmm` (above) and the many model-specific Gibbs samplers in individual R packages (e.g. `spBayes`, `BayesLogit`) fill in the rest. PyMC's compound steps also give it Gibbs-style updates for discrete variables.
 
 ## Category 3: languages built around Hamiltonian Monte Carlo
 
@@ -130,6 +130,84 @@ These tools fit a fixed but broad class of models, typically (generalized) linea
 * **Birch** [@murrayAutomated2018; [site](https://birch-lang.org/)]. Lawrence Murray; 2016–. A standalone language compiled to C++, focused on SMC with delayed sampling (automatic Rao–Blackwellization) for state-space and other sequential models. Small but still active. ★.
 * **TMB/RTMB, ADMB** [@kristensenTMB2016]. Frequentist tools for Laplace-approximation (empirical Bayes) fitting of models with random effects, written as procedural C++ or R code. Not Bayesian themselves, but via `tmbstan`/`adnuts` [@monnahanNoUTurn2018] they bridge into full Bayesian inference. ★★ in fisheries and ecology.
 * **Dormant or superseded** (mainly of historical interest): Edward [@tranEdward2016] (folded into TensorFlow Probability / Edward2), Meta's Bean Machine (archived 2023), Soss.jl (inactive since 2024), WebPPL (inactive since 2024), TuringGLM.jl (archived), WinBUGS/OpenBUGS.
+
+## Aside: samplers for log-posterior functions written in R {#sec-rsamplers}
+
+These packages are not PPLs: there is no modelling language. You write an ordinary R function that takes a parameter vector and returns the log posterior density (log-likelihood plus log-prior, up to a constant), and the package runs a general-purpose sampler on it. This is the most direct way to do MCMC on a model you have already coded as a likelihood, e.g. for `optim()` or `bbmle`. These samplers are adaptive random-walk Metropolis or similar, so they need no gradients. They are fine for models with a handful to a few dozen parameters, but much less efficient than HMC for high-dimensional or strongly correlated posteriors. StanEstimators (Category 3) is the HMC option for an R log-density function.
+
+Each parameter has to be defined on the whole real line, so constrained parameters must be transformed by hand. For example, sample $\log\tau$ and add the log-Jacobian of the transformation to the log density. Download counts are for the last 30 days as of 24 October 2026 (RStudio CRAN mirror).
+
+* **`MCMCpack::MCMCmetrop1R()`** [@martinMCMCpack2011]. Random-walk Metropolis with a multivariate normal proposal. By default it first maximizes the function with `optim()` and bases the proposal covariance on the Hessian at the mode, scaled by a user-set `tune` multiplier (no adaptation during sampling). Simple and robust when the posterior is roughly normal. MCMCpack (since 2004) is mostly a collection of model-specific samplers. Mature; ~24,000 downloads/month, though most are for the canned models.
+* **`LaplacesDemon`** ([GitHub](https://github.com/LaplacesDemonR/LaplacesDemon)). Originally written by Byron Hall (Statisticat), now maintained by Henrik Singmann (16.1.8, Feb 2026). A large "complete environment" with about 40 MCMC algorithms selected by the `Algorithm` argument: adaptive Metropolis variants (AM, DRAM, RAM), slice sampling, t-walk, differential evolution, and HMC/NUTS with finite-difference gradients. Also includes Laplace approximation (`LaplaceApproximation()`), variational Bayes and iterative quadrature. The model function has to return a list in a specific format, and each algorithm takes its own `Specs` list. ~9,000 downloads/month.
+* **`ramcmc`** (Jouni Helske; 0.1.2, 2021). Not a complete sampler but a building block. `adapt_S()` updates the Cholesky factor of the proposal covariance according to Vihola's robust adaptive Metropolis algorithm [@viholaRobust2012], which adapts the proposal's shape to reach a target acceptance rate (0.234 by default). You write the Metropolis loop yourself, as in the example below. The C++ headers can also be used from other packages (e.g. `bssm`). ~2,600 downloads/month.
+* Others: `mcmc` (Charles Geyer; `metrop()` for random-walk Metropolis, `temper()` for parallel and serial tempering; ~16,000 downloads/month), `adaptMCMC` (Vihola's algorithm in a ready-made `MCMC()` function), `BayesianTools` (Florian Hartig; differential-evolution MCMC, DREAM and SMC samplers aimed at ecological process models), `fmcmc` (a modular framework with interchangeable proposal kernels) and `mcmcensemble` (the affine-invariant ensemble sampler popularized by Python's `emcee`).
+
+Here are the eight-schools model and priors from the previous section, written as an R function. It uses the non-centred parameterization, with parameter vector `p` = (μ, log τ, η~1~, …, η~8~):
+
+```{r}
+#| label: eight-schools-logpost
+#| eval: false
+y <- c(28.39, 7.94, -2.75, 6.82, -0.64, 0.63, 18.01, 12.16)
+sigma <- c(14.9, 10.2, 16.3, 11.0, 9.4, 11.4, 10.4, 17.6)
+logpost <- function(p, y, sigma) {
+    mu <- p[1]; tau <- exp(p[2]); eta <- p[-(1:2)]
+    theta <- mu + tau * eta
+    dnorm(mu, 0, 100, log = TRUE) +
+        dexp(tau, rate = 0.02, log = TRUE) + p[2] +  ## + log-Jacobian of exp()
+        sum(dnorm(eta, log = TRUE)) +
+        sum(dnorm(y, theta, sigma, log = TRUE))
+}
+p0 <- c(mean(y), log(10), rep(0, 8))  ## starting values
+```
+
+**MCMCpack.** Extra arguments are passed on to the log-posterior function:
+
+```{r}
+#| label: eight-schools-mcmcpack
+#| eval: false
+m1 <- MCMCpack::MCMCmetrop1R(logpost, theta.init = p0, y = y, sigma = sigma,
+                             mcmc = 20000, burnin = 2000)
+```
+
+**LaplacesDemon.** The data have to go in a list that also holds the parameter names, and the model function returns the log posterior along with some other components:
+
+```{r}
+#| label: eight-schools-laplacesdemon
+#| eval: false
+Data <- list(y = y, sigma = sigma, N = 8,
+             parm.names = c("mu", "log_tau", paste0("eta", 1:8)),
+             mon.names = "tau")
+Model <- function(parm, Data) {
+    LP <- logpost(parm, Data$y, Data$sigma)
+    list(LP = LP, Dev = -2 * LP, Monitor = exp(parm[2]),
+         yhat = Data$y, parm = parm)
+}
+m2 <- LaplacesDemon::LaplacesDemon(Model, Data, Initial.Values = p0,
+                                   Iterations = 20000, Algorithm = "AM",
+                                   Specs = list(Adaptive = 500, Periodicity = 10))
+```
+
+**ramcmc.** A hand-written robust adaptive Metropolis loop:
+
+```{r}
+#| label: eight-schools-ramcmc
+#| eval: false
+n_iter <- 20000
+S <- diag(length(p0))  ## Cholesky factor of the proposal covariance
+p <- p0; lp <- logpost(p, y, sigma)
+draws <- matrix(NA, n_iter, length(p0))
+for (i in 1:n_iter) {
+    u <- rnorm(length(p0))
+    prop <- p + S %*% u
+    lp_prop <- logpost(prop, y, sigma)
+    acc <- min(1, exp(lp_prop - lp))
+    if (runif(1) < acc) { p <- prop; lp <- lp_prop }
+    S <- ramcmc::adapt_S(S, u, acc, i)
+    draws[i, ] <- p
+}
+```
+
+With 20,000 iterations, all three give posterior means of about 8 for μ and 6 for τ. The chains are strongly autocorrelated, though (in a test run, the effective sample size for log τ was only about 200–400), so check effective sample sizes (e.g. with `coda::effectiveSize()` or the `posterior` package) before trusting these numbers.
 
 ## Summary table {#sec-summary}
 
@@ -354,6 +432,7 @@ Collected 24 October 2026. CRAN: downloads from the RStudio/Posit CRAN mirror ov
 To refresh the CRAN numbers:
 
 ```{r}
+#| label: cran-downloads
 #| eval: false
 library(cranlogs)
 pkgs <- c("rstan", "brms", "rstanarm", "glmmTMB", "tmbstan", "RTMB", "rjags",
