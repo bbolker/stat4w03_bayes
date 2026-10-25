@@ -102,6 +102,8 @@ These tools fit a fixed but broad class of models, typically (generalized) linea
 
 ## Category 3: languages built around Hamiltonian Monte Carlo
 
+HMC began in physics as "hybrid Monte Carlo". @nealMCMC2011 is the standard technical introduction for statisticians, and @betancourtConceptual2017 gives a more intuitive account of why HMC works and when it fails.
+
 ### Stan
 
 **Stan** [@carpenterStan2017; [site](https://mc-stan.org/)]. 1.0 released 2012; latest 2.40 (Sep 2026). Developed by a large community (Gelman, Carpenter, Goodrich, Betancourt, Gabry, Vehtari and many others), fiscally sponsored by NumFOCUS, with frequent releases, a busy [forum](https://discourse.mc-stan.org/) and very extensive documentation (User's Guide, Functions Reference, case studies). It is the reference implementation of adaptive NUTS and its diagnostics, and also provides L-BFGS optimization, Laplace approximation, ADVI and Pathfinder. A Stan program is *procedural*: a C++-like language with typed, constrained declarations in `data`, `parameters`, `transformed parameters` and `model` blocks, compiled to C++. It has many interfaces: `cmdstanr`/`rstan` (R), CmdStanPy/PyStan (Python), StanSample.jl (Julia), and BridgeStan [@roualdesBridgeStan2023], which exposes a compiled model's log density and gradient to other languages (Python, R, Julia). Many other tools are front ends to Stan: `brms`, `rstanarm`, `ulam`, `prophet` and others. Stan is the de facto standard for general-purpose Bayesian modelling in statistics and the social and biological sciences. ★★★.

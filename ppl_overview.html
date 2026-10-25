@@ -2498,6 +2498,7 @@ window.Quarto = {
 </section>
 <section id="category-3-languages-built-around-hamiltonian-monte-carlo" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="category-3-languages-built-around-hamiltonian-monte-carlo"><span class="header-section-number">4</span> Category 3: languages built around Hamiltonian Monte Carlo</h2>
+<p>HMC began in physics as “hybrid Monte Carlo”. <span class="citation" data-cites="nealMCMC2011">Neal (<a href="#ref-nealMCMC2011" role="doc-biblioref">2011</a>)</span> is the standard technical introduction for statisticians, and <span class="citation" data-cites="betancourtConceptual2017">Betancourt (<a href="#ref-betancourtConceptual2017" role="doc-biblioref">2017</a>)</span> gives a more intuitive account of why HMC works and when it fails.</p>
 <section id="stan" class="level3" data-number="4.1">
 <h3 data-number="4.1" class="anchored" data-anchor-id="stan"><span class="header-section-number">4.1</span> Stan</h3>
 <p><strong>Stan</strong> [<span class="citation" data-cites="carpenterStan2017">Carpenter <em>et al.</em> (<a href="#ref-carpenterStan2017" role="doc-biblioref">2017</a>)</span>; <a href="https://mc-stan.org/">site</a>]. 1.0 released 2012; latest 2.40 (Sep 2026). Developed by a large community (Gelman, Carpenter, Goodrich, Betancourt, Gabry, Vehtari and many others), fiscally sponsored by NumFOCUS, with frequent releases, a busy <a href="https://discourse.mc-stan.org/">forum</a> and very extensive documentation (User’s Guide, Functions Reference, case studies). It is the reference implementation of adaptive NUTS and its diagnostics, and also provides L-BFGS optimization, Laplace approximation, ADVI and Pathfinder. A Stan program is <em>procedural</em>: a C++-like language with typed, constrained declarations in <code>data</code>, <code>parameters</code>, <code>transformed parameters</code> and <code>model</code> blocks, compiled to C++. It has many interfaces: <code>cmdstanr</code>/<code>rstan</code> (R), CmdStanPy/PyStan (Python), StanSample.jl (Julia), and BridgeStan <span class="citation" data-cites="roualdesBridgeStan2023">(<a href="#ref-roualdesBridgeStan2023" role="doc-biblioref">Roualdes <em>et al.</em>, 2023</a>)</span>, which exposes a compiled model’s log density and gradient to other languages (Python, R, Julia). Many other tools are front ends to Stan: <code>brms</code>, <code>rstanarm</code>, <code>ulam</code>, <code>prophet</code> and others. Stan is the de facto standard for general-purpose Bayesian modelling in statistics and the social and biological sciences. ★★★.</p>
@@ -3258,6 +3259,9 @@ Abril-Pla, O. <em>et al.</em> (2023) <span>“<span>PyMC</span>: A modern, and c
 <div id="ref-berahaJAGS2021" class="csl-entry" role="listitem">
 Beraha, M., Falco, D. and Guglielmi, A. (2021) <span>“<span>JAGS</span>, <span>NIMBLE</span>, <span>Stan</span>: A detailed comparison among <span>Bayesian MCMC</span> software.”</span> arXiv. doi:<a href="https://doi.org/10.48550/arXiv.2107.09357">10.48550/arXiv.2107.09357</a>.
 </div>
+<div id="ref-betancourtConceptual2017" class="csl-entry" role="listitem">
+Betancourt, M. (2017) <span>“A conceptual introduction to <span>Hamiltonian</span> <span>Monte</span> <span>Carlo</span>.”</span> arXiv. doi:<a href="https://doi.org/10.48550/arXiv.1701.02434">10.48550/arXiv.1701.02434</a>.
+</div>
 <div id="ref-binghamPyro2019" class="csl-entry" role="listitem">
 Bingham, E. <em>et al.</em> (2019) <span>“Pyro: Deep universal probabilistic programming,”</span> <em>Journal of Machine Learning Research</em>, 20(28), pp. 1–6.
 </div>
@@ -3353,6 +3357,9 @@ Monnahan, C.C. and Kristensen, K. (2018) <span>“No-<span class="nocase">U-turn
 </div>
 <div id="ref-murrayAutomated2018" class="csl-entry" role="listitem">
 Murray, L.M. and Schön, T.B. (2018) <span>“Automated learning with a probabilistic programming language: <span>Birch</span>,”</span> <em>Annual Reviews in Control</em>, 46, pp. 29–43. doi:<a href="https://doi.org/10.1016/j.arcontrol.2018.10.013">10.1016/j.arcontrol.2018.10.013</a>.
+</div>
+<div id="ref-nealMCMC2011" class="csl-entry" role="listitem">
+Neal, R.M. (2011) <span>“<span>MCMC</span> using <span>Hamiltonian</span> dynamics,”</span> in Brooks, S. et al. (eds.) <em>Handbook of <span>Markov</span> chain <span>Monte</span> <span>Carlo</span></em>. <span>Boca Raton, FL</span>: <span>Chapman and Hall/CRC</span>, pp. 113–162. doi:<a href="https://doi.org/10.1201/b10905-6">10.1201/b10905-6</a>.
 </div>
 <div id="ref-phanComposable2019" class="csl-entry" role="listitem">
 Phan, D., Pradhan, N. and Jankowiak, M. (2019) <span>“Composable effects for flexible and accelerated probabilistic programming in <span>NumPyro</span>.”</span> arXiv. doi:<a href="https://doi.org/10.48550/arXiv.1912.11554">10.48550/arXiv.1912.11554</a>.
