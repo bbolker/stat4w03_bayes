@@ -1,0 +1,360 @@
+---
+title: "Probabilistic programming for Bayesian computation: a survey (late 2026)"
+author: "Ben Bolker"
+date: "24 October 2026"
+bibliography: bayes.bib
+csl: harvard-cite-them-right.csl
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    embed-resources: true
+    number-sections: true
+---
+
+## Introduction
+
+A *probabilistic programming language* (PPL) lets you write down a statistical model (priors plus likelihood) and hands it to a general-purpose inference engine. You don't have to derive and code a sampler yourself. In practice the term covers everything from R packages with a fixed model class and a formula interface (`brms`, `rstanarm`) to full programming languages whose programs define probability distributions (Stan, Turing.jl, Gen).
+
+This document sorts the current (October 2026) tools into four rough categories:
+
+1. **Restricted model-class tools** (mostly hierarchical/mixed models with a formula interface).
+2. **Graphical-model languages designed around Gibbs (component-wise) sampling** (the BUGS family).
+3. **Languages designed around Hamiltonian Monte Carlo (HMC)** (Stan and its relatives, plus the "differentiable" PPLs in Python/Julia/R).
+4. **Other inference strategies and general-purpose PPLs** (tempering, SMC, message passing, Laplace/INLA, programmable inference).
+
+The categories overlap. NIMBLE does HMC as well as Gibbs, `ulam` is a front end to Stan, and Pigeons.jl can sample Stan or Turing models. The summary table in @sec-summary gives the bird's-eye view.
+
+### Axes of comparison
+
+**Inference engine.** The algorithm largely decides what kinds of models a tool handles well:
+
+* *Gibbs and component-wise samplers* (conjugate updates, slice sampling, adaptive Metropolis on single nodes) need to know the model's conditional-independence structure. In exchange they can handle **discrete parameters** directly and need no gradients. They mix slowly when parameters are strongly correlated.
+* *Hamiltonian Monte Carlo*, especially the No-U-Turn sampler [NUTS, @hoffmanNoUTurn2014], needs only the log posterior density and its gradient, which come from automatic differentiation. It is far more efficient for correlated continuous posteriors and has strong diagnostics (divergences, E-BFMI). It **cannot sample discrete parameters**, which have to be marginalized out by hand, and it struggles with multimodality.
+* *Deterministic approximations*: Laplace approximation (TMB, `glmmTMB`, INLA), variational inference (ADVI, Pathfinder, Pyro/NumPyro SVI), expectation propagation and message passing (Infer.NET).
+* *Population or tempering methods*: sequential Monte Carlo, (non-reversible) parallel tempering [@syedNonreversible2022]. These target multimodal or otherwise difficult posteriors, and can also estimate marginal likelihoods (normalizing constants).
+
+**Model specification: graphical vs. procedural.**
+
+* In a **graphical** (declarative) language the model is a set of *dependency statements*, one per node of a directed acyclic graph (`y[i] ~ dnorm(mu[i], tau)`). The order of statements doesn't matter, every variable is assigned exactly once, and the software builds the graph and works out which samplers to use. BUGS, JAGS, NIMBLE, JuliaBUGS, Blang and (approximately) `ulam` work this way. Because the engine can see the graph, it can exploit conjugacy and conditional independence.
+* In a **procedural** (imperative) language the model is *code that computes the log density*: statements run in order, there can be loops, local variables, branching and user-defined functions, and `~` is shorthand for "add this log-density term to the running total". Stan is the canonical example. Its `y ~ normal(mu, sigma)` looks declarative, but it is literally `target += normal_lpdf(y | mu, sigma)`. TMB/RTMB (a C++ or R function returning the negative log-likelihood), StanEstimators (an arbitrary R function), Turing.jl, Pyro/NumPyro and Gen are also procedural. Such engines usually see only a black-box (differentiable) function, which suits HMC.
+* **Embedded graph-building** languages sit in between. In PyMC, `greta` and TensorFlow Probability you write ordinary host-language code, but that code *builds* a computational graph that the engine can inspect and differentiate. PyMC uses the graph to assign Gibbs-style steps to discrete variables and NUTS to continuous ones.
+* **Formula interfaces** (`brms`, `rstanarm`, Bambi, `MCMCglmm`, INLA) hide the model code completely behind an `lme4`-style formula. `brms` then *generates* Stan code, which you can inspect with `stancode()`.
+
+**Maturity and support.** Below I note when each tool was first released, whether it is actively developed (judged from the latest release and GitHub activity as of October 2026), and who maintains it (single developer, academic group, or large community or company).
+
+**Usage.** Usage is hard to measure. I use CRAN downloads (last 30 days, RStudio mirror only), PyPI downloads (last month) and GitHub stars, all collected 24 October 2026 (see @sec-numbers), and bin them coarsely:
+★★★ = widely used, ★★ = substantial user community, ★ = niche or specialist.
+Download counts are inflated for packages that other popular packages depend on. For example, `prophet` pulls in `rstan` and `cmdstanpy`.
+
+## Category 1: restricted model classes (formula interfaces)
+
+These tools fit a fixed but broad class of models, typically (generalized) linear mixed models plus extensions, using `lme4`-style formulas. They are the easiest way to fit "standard" hierarchical models in a Bayesian framework, and usually the right place to start.
+
+### R
+
+* **`rstanarm`** [@goodrichRstanarm2025; [site](https://mc-stan.org/rstanarm/)]. Run by the Stan team; first on CRAN in 2016. Ships *precompiled* Stan models for GLMs, GLMMs (`stan_glmer`), GAMMs, joint longitudinal/survival models and others, so no C++ compilation is needed at fit time. The weakly informative default priors are carefully chosen. Development is slow but steady (2.32.2, Sep 2025). ★★.
+* **`brms`** [@burknerBrms2017; [site](https://paulbuerkner.com/brms/)]. By Paul Bürkner; on CRAN since 2015. Translates an extended formula syntax into Stan code, which is then compiled. It is extremely flexible: dozens of response families, distributional regression (models for $\sigma$, zero-inflation, etc.), non-linear formulas, splines and GPs, multivariate responses, measurement error, missing-data imputation, censoring/truncation, phylogenetic and spatial terms. Backends are `rstan` or `cmdstanr`. Probably the most widely used tool in this category; very active development (2.23.0 on CRAN, Sep 2025, with ongoing GitHub activity). ★★★.
+* **`glmmTMB` + `tmbstan`** [@brooksGlmmTMB2017; @monnahanNoUTurn2018]. `glmmTMB` (CRAN 2017; active) fits GLMMs by maximum likelihood with the Laplace approximation in TMB [@kristensenTMB2016]. Passing a fitted model's TMB object to `tmbstan::tmbstan()` runs Stan's NUTS on the same objective. Set `laplace = FALSE` (the default) to sample the random effects too, or `laplace = TRUE` to sample only the fixed effects, with the random effects integrated out by the Laplace approximation. Priors can be specified in `glmmTMB` with the `priors` argument (or else are improper flat). This combination is a niche route to Bayesian GLMMs, used mostly by people already using `glmmTMB`. `glmmTMB` itself: ★★★ (mostly frequentist use); `tmbstan`: ★.
+* **`MCMCglmm`** [@hadfieldMCMC2010]. CRAN 2010. Gibbs and Metropolis–Hastings samplers for multi-response GLMMs. Popular in evolutionary biology and quantitative genetics because it handles pedigrees and phylogenies (animal models) directly. Mature, with little recent development (last release 2024). ★★.
+* **INLA / `inlabru`** [@rueApproximate2009; [site](https://www.r-inla.org/)]. Not MCMC: integrated nested Laplace approximations for *latent Gaussian models*, a class that covers GLMMs, GAMs and spatial/spatiotemporal SPDE models. Very fast, accurate within its class, and dominant in spatial statistics. Since 2009; actively developed by Håvard Rue's group at KAUST. Distributed from its own repository rather than CRAN. `inlabru` (CRAN, active) adds a friendlier interface. ★★.
+* **`rethinking::quap()`/`ulam()`** ([GitHub](https://github.com/rmcelreath/rethinking)). Richard McElreath's package accompanying *Statistical Rethinking* [@mcelreathStatistical2020]. Models are written as an `alist()` of formulas, one per line, in a style close to mathematical notation:
+
+  ```r
+  ulam(alist(
+      y ~ dnorm(mu, sigma),
+      mu <- a + b * x,
+      a ~ dnorm(0, 10), b ~ dnorm(0, 1), sigma ~ dexp(1)
+  ), data = d)
+  ```
+
+  `quap()` uses a quadratic (Laplace) approximation. `ulam()` translates the same list into Stan code and runs it with `rstan` or `cmdstanr`. The model is not restricted to GLMMs: any model expressible as a list of such statements works, so `ulam` is really a lightweight *graphical* front end to Stan (Category 3). It is designed for teaching and is not on CRAN. Started in 2013, with `ulam` replacing the older `map2stan` around the 2nd edition (2020). Updated occasionally. Widely used in courses (2,400 GitHub stars) but rarely in published research. ★★.
+* Also worth knowing: `blme` (Bayesian-flavoured MAP estimates for `lme4` models), `MCMCpack` (model-specific samplers, since 2004), and the post-processing ecosystem that most of these share: `posterior`, `bayesplot` [@gabryVisualization2019] and `loo`.
+
+### Python
+
+* **Bambi** [@caprettoBambi2022; [site](https://bambinos.github.io/bambi/)]. A formula interface (`"y ~ x + (1|g)"`) built on PyMC. Since 2016, active, and the closest Python analogue of `brms`/`rstanarm`. ★★.
+* PyMC has a growing set of domain-specific add-on libraries, e.g. PyMC-Marketing for marketing-mix models.
+
+### Julia
+
+* **TuringGLM.jl** offered a `brms`-like formula interface to Turing, but the repository has been **archived**. At the moment Julia has no actively maintained formula-level Bayesian GLMM package; users write Turing models directly.
+
+## Category 2: graphical languages built around Gibbs sampling
+
+### The BUGS family
+
+* **BUGS / WinBUGS / OpenBUGS / MultiBUGS** [@lunnWinBUGS2000; @lunnBUGS2009; @goudieMultiBUGS2020; [site](https://www.mrc-bsu.cam.ac.uk/software/bugs/)]. BUGS ("Bayesian inference Using Gibbs Sampling", MRC Biostatistics Unit, Cambridge, from 1989) invented the declarative graphical-model language that most of this category still uses. WinBUGS (1997; frozen at 1.4.3 since 2007) and OpenBUGS (last release 2014) are no longer developed. MultiBUGS [2017; @goudieMultiBUGS2020] parallelizes OpenBUGS, but its repository has been quiet since 2021. Lots of legacy code and textbooks [e.g. @keryIntroduction2010; @keryBayesian2011; @mccarthyBayesian2007] use BUGS syntax, so it is still worth being able to *read* BUGS. Usage today is legacy: ★★ (declining).
+* **JAGS** ("Just Another Gibbs Sampler") [@plummerJAGS2003; [site](https://mcmc-jags.sourceforge.io/)]. Martyn Plummer's cross-platform, open-source reimplementation of the BUGS language in C++. Under development since about 2003, 1.0 in 2007. Accessed from R through `rjags`, `R2jags`, `runjags` or `jagsUI`. It became the default BUGS dialect, especially in ecology. Latest release 4.3.2 (March 2023): mature, stable, maintenance mode with a single maintainer. `rjags` still gets ~21,000 CRAN downloads/month. JAGS is often *faster* than Stan for conjugate or semi-conjugate models and models with discrete latent variables, and much slower for models with highly correlated continuous parameters [@berahaJAGS2021]. ★★★ (historically; flat or declining).
+* **NIMBLE** [@devalpineProgramming2017; [site](https://r-nimble.org/)]. An R package (first released c. 2015) whose model language is an extended BUGS dialect that NIMBLE compiles to C++. What sets it apart is that the *algorithms* are programmable too: users can choose, customize or write samplers (in the R-like `nimbleFunction` language), and the package includes SMC/particle filters, MCEM, reversible jump, Bayesian nonparametrics (CRP/stick-breaking), automatic differentiation, Laplace approximation and HMC (`nimbleHMC`, 2023). It is therefore graphical, but no longer Gibbs-only. Developed by an NSF-funded academic team (de Valpine, Paciorek, Turek and others); active (1.4.3, Aug 2026). ★★.
+* **JuliaBUGS.jl** ([GitHub](https://github.com/TuringLang/JuliaBUGS.jl)). A TuringLang project (2021–, active) that implements BUGS syntax in Julia, plus a Julia-native macro syntax. It compiles the graph to a log density that can be sampled with Julia's HMC/NUTS (AdvancedHMC) or with Gibbs-style updates. In other words it brings *graphical specification and HMC* together. Young project. ★.
+
+### Blang
+
+**Blang** [@bouchard-coteBlang2022; [site](https://www.stat.ubc.ca/~bouchard/blang/)]. From Alexandre Bouchard-Côté's group at UBC (development c. 2016–, JSS paper 2022). A declarative language with BUGS-like syntax, built on Xtend/the JVM. It targets models over **arbitrary data structures**: phylogenies, permutations, matchings, partitions and other combinatorial objects that are not Euclidean vectors. Users declare types and the "laws" relating them, and can supply custom samplers for new types. Its default inference engine is not Gibbs but **non-reversible parallel tempering** and **SMC**, which suit the multimodal posteriors these models produce, and it estimates marginal likelihoods along the way. It belongs here because of its graphical, BUGS-like specification. Research software with a small team; last GitHub activity Nov 2025. It is also one of the targets Pigeons.jl can sample (see below). ★.
+
+### Other Gibbs-flavoured tools
+
+`LaplacesDemon` (R, many MCMC algorithms, procedural log-posterior function), `MCMCglmm` (above) and the many model-specific Gibbs samplers in individual R packages (e.g. `spBayes`, `BayesLogit`) fill in the rest. PyMC's compound steps also give it Gibbs-style updates for discrete variables.
+
+## Category 3: languages built around Hamiltonian Monte Carlo
+
+### Stan
+
+**Stan** [@carpenterStan2017; [site](https://mc-stan.org/)]. 1.0 released 2012; latest 2.40 (Sep 2026). Developed by a large community (Gelman, Carpenter, Goodrich, Betancourt, Gabry, Vehtari and many others), fiscally sponsored by NumFOCUS, with frequent releases, a busy [forum](https://discourse.mc-stan.org/) and very extensive documentation (User's Guide, Functions Reference, case studies). It is the reference implementation of adaptive NUTS and its diagnostics, and also provides L-BFGS optimization, Laplace approximation, ADVI and Pathfinder. A Stan program is *procedural*: a C++-like language with typed, constrained declarations in `data`, `parameters`, `transformed parameters` and `model` blocks, compiled to C++. It has many interfaces: `cmdstanr`/`rstan` (R), CmdStanPy/PyStan (Python), StanSample.jl (Julia), and BridgeStan [@roualdesBridgeStan2023], which exposes a compiled model's log density and gradient to other languages (Python, R, Julia). Many other tools are front ends to Stan: `brms`, `rstanarm`, `ulam`, `prophet` and others. Stan is the de facto standard for general-purpose Bayesian modelling in statistics and the social and biological sciences. ★★★.
+
+### Stan-adjacent tools in R
+
+* **`ulam`**: see Category 1. A graphical front end that generates Stan code.
+* **`tmbstan`** [@monnahanNoUTurn2018; [GitHub](https://github.com/kaskr/tmbstan)]. Runs Stan's NUTS sampler on any **TMB** model. TMB [@kristensenTMB2016] models are procedural C++ templates; with **RTMB** (CRAN 2023, very active) they are plain R functions computing the negative log-likelihood. Common in fisheries and ecology, where large state-space models are already written in TMB. Optional Laplace approximation of random effects within NUTS. Maintained by Kasper Kristensen. ★.
+* **StanEstimators** ([site](https://andrjohns.github.io/StanEstimators/)). Andrew Johnson (a Stan developer); 2023–. Applies Stan's algorithms (NUTS, optimization, Laplace, ADVI, Pathfinder) to an **arbitrary R function** returning a log density, much like `optim()`, with gradients computed by finite differences or supplied by the user. The most purely procedural option in R: no modelling language at all. Installed from r-universe; a single developer; last activity July 2026. ★.
+* **greta** [@goldingGreta2019; [site](https://greta-dev.github.io/greta/)]. Nick Golding and collaborators; CRAN 2018; 0.6.0 (July 2026) after a long gap. Models are written in **R** by creating "greta arrays" and declaring `distribution(y) <- normal(mu, sd)`. The R code builds a TensorFlow graph (embedded graph-building), and greta runs HMC (and optimizers) through TensorFlow Probability, on CPU or GPU. Appealing to R users who don't want to learn Stan. The Python/TensorFlow dependency is a recurring installation headache. Small user base (~800 CRAN downloads/month). ★.
+
+### Python
+
+* **PyMC** [@abril-plaPyMC2023; [site](https://www.pymc.io/)]. The oldest Python PPL (c. 2003). PyMC3 (2016) introduced NUTS, and the current series runs on the PyTensor graph library. Models are built in a `with pm.Model():` block (embedded graph-building). Default NUTS for continuous parameters plus automatically assigned Metropolis/Gibbs steps for discrete ones; can compile to JAX (sampling with NumPyro or BlackJAX) or use the Rust **nutpie** sampler. Large community, NumFOCUS-sponsored, commercial support from PyMC Labs; very active. ~1.3 million PyPI downloads/month; ~9,800 GitHub stars. ★★★.
+* **NumPyro** [@phanComposable2019; [site](https://num.pyro.ai/)]. 2019–. Pyro's modelling language running on **JAX**: procedural Python functions with `numpyro.sample` statements, a very fast JIT-compiled NUTS (also on GPU), SVI, and enumeration of discrete latent variables. Popular in ML-adjacent statistics. ★★★.
+* **Pyro** [@binghamPyro2019; [site](https://pyro.ai/)]. 2017–; originally Uber AI, now under the Linux Foundation. Procedural PPL on PyTorch, oriented toward stochastic variational inference and deep generative models ("deep universal probabilistic programming"); also offers HMC/NUTS. ★★★ (mostly ML).
+* **TensorFlow Probability** [@dillonTensorFlow2017; [site](https://www.tensorflow.org/probability)]. Google, 2018–. A library of distributions, bijectors, MCMC kernels and VI, with `JointDistribution*` models. It is the backend for greta. It powers many applications, though in practice it is now less often used as a PPL in its own right. ★★★ (as a library).
+* **BlackJAX** [@cabezasBlackJAX2024; [site](https://blackjax-devs.github.io/blackjax/)] and **nutpie** ([GitHub](https://github.com/pymc-devs/nutpie)) are *sampler libraries* rather than PPLs: they take a log density (from PyMC, NumPyro, Stan via BridgeStan, or your own JAX code) and supply NUTS, MCLMC, SMC and other samplers. Both active. ★★.
+
+### Julia
+
+* **Turing.jl** [@geTuring2018; @fjeldeTuring2025; [site](https://turinglang.org/)]. Cambridge / Alan Turing Institute, 2016– (v0.49, Sep 2026; still pre-1.0 and API changes are frequent). Models are ordinary Julia functions marked with `@model`, with `~` statements: *procedural*, with full access to Julia (loops, control flow, any Julia library, including ODE solvers). Composable inference: NUTS/HMC via AdvancedHMC.jl, particle Gibbs and SMC for discrete or stochastic-control-flow models, Gibbs combinations of samplers on different parameter blocks, VI, and MAP/MLE. Large ecosystem (DynamicPPL, AbstractMCMC, Bijectors). By far the most-used Julia PPL (~2,300 GitHub stars), but the Julia user base is much smaller than R's or Python's. ★★.
+
+## Category 4: other inference strategies and general-purpose PPLs
+
+* **Pigeons.jl** [@surjanovicPigeons2025; [site](https://pigeons.run/)]. From the Bouchard-Côté/Campbell groups at UBC; 2023– (0.4.11, May 2026; active). Not a modelling language but an inference engine for **difficult posteriors**: multimodal, high-dimensional or with non-identifiable parameters. It uses non-reversible parallel tempering [@syedNonreversible2022] and variational reference distributions, and also estimates normalizing constants (marginal likelihoods, useful for model comparison). It runs on one core, multithreaded, or distributed over MPI clusters, with results that are bitwise reproducible regardless of the number of processes. Targets can be **Turing.jl models, Stan models (through BridgeStan), Blang models**, or a user-supplied Julia log density. ★ (specialist, but the best-supported implementation of these methods).
+* **Gen.jl** [@cusumano-townerGen2019; [site](https://www.gen.dev/)]. MIT Probabilistic Computing Project, 2018–. A general-purpose PPL in Julia with *programmable inference*: users combine MCMC, SMC, importance sampling and variational building blocks, with custom proposals. Aimed at AI/cognitive-science applications more than standard statistical models. Activity has slowed (last push June 2026); the group also develops a JAX version. ★★ (research community).
+* **Infer.NET** ([site](https://dotnet.github.io/infer/)). Microsoft Research, 2008; open-sourced 2018. Compiles models written in C#/F# into deterministic message-passing code (expectation propagation, variational message passing). Very fast for the models it supports; used in production at Microsoft. Little statistics-community use. ★.
+* **Birch** [@murrayAutomated2018; [site](https://birch-lang.org/)]. Lawrence Murray; 2016–. A standalone language compiled to C++, focused on SMC with delayed sampling (automatic Rao–Blackwellization) for state-space and other sequential models. Small but still active. ★.
+* **TMB/RTMB, ADMB** [@kristensenTMB2016]. Frequentist tools for Laplace-approximation (empirical Bayes) fitting of models with random effects, written as procedural C++ or R code. Not Bayesian themselves, but via `tmbstan`/`adnuts` [@monnahanNoUTurn2018] they bridge into full Bayesian inference. ★★ in fisheries and ecology.
+* **Dormant or superseded** (mainly of historical interest): Edward [@tranEdward2016] (folded into TensorFlow Probability / Edward2), Meta's Bean Machine (archived 2023), Soss.jl (inactive since 2024), WebPPL (inactive since 2024), TuringGLM.jl (archived), WinBUGS/OpenBUGS.
+
+## Summary table {#sec-summary}
+
+Spec style: **G** = graphical/declarative; **P** = procedural; **E** = embedded graph-building (host-language code that constructs a graph); **F** = formula interface. Status reflects releases and repository activity as of October 2026.
+
+| Tool | Host language | Spec | Main inference | First release | Status | Usage |
+|:-----|:-----|:--:|:-----|:--:|:-----|:--:|
+| rstanarm | R | F | NUTS (Stan, precompiled) | 2016 | active (slow) | ★★ |
+| brms | R | F → Stan | NUTS (Stan) | 2015 | active | ★★★ |
+| glmmTMB + tmbstan | R | F | Laplace MLE; NUTS (Stan) | 2017 / 2018 | active | ★★★ / ★ |
+| MCMCglmm | R | F | Gibbs/MH | 2010 | maintenance | ★★ |
+| INLA / inlabru | R | F | nested Laplace | 2009 | active | ★★ |
+| Bambi | Python | F | NUTS (PyMC) | 2016 | active | ★★ |
+| rethinking (`quap`, `ulam`) | R | G (→ Stan) | Laplace; NUTS (Stan) | 2013 (`ulam` c. 2019) | occasional updates | ★★ (teaching) |
+| WinBUGS / OpenBUGS / MultiBUGS | standalone (R interfaces) | G | Gibbs | 1989 / 1997 / 2017 | dormant | ★★ (legacy) |
+| JAGS | C++ (R interfaces) | G | Gibbs, slice | 2007 | maintenance | ★★★ (declining) |
+| NIMBLE | R → C++ | G | configurable: Gibbs, MH, HMC, SMC, Laplace | c. 2015 | active | ★★ |
+| JuliaBUGS.jl | Julia | G | NUTS, Gibbs | 2021 | active (young) | ★ |
+| Blang | JVM (Xtend) | G | parallel tempering, SMC | c. 2016–19 | research, slow | ★ |
+| Stan | standalone (C++) | P | NUTS; optim, Laplace, ADVI, Pathfinder | 2012 | very active | ★★★ |
+| tmbstan / RTMB | R / C++ | P | NUTS (Stan) on TMB models | 2018 / 2023 | active | ★ |
+| StanEstimators | R | P (any R function) | Stan algorithms | 2023 | single developer | ★ |
+| greta | R (→ TensorFlow) | E | HMC (TFP), optim | 2018 | active (revived) | ★ |
+| PyMC | Python | E | NUTS + Gibbs/MH, SMC, VI | c. 2003 (NUTS 2016) | very active | ★★★ |
+| NumPyro | Python (JAX) | P | NUTS, SVI | 2019 | very active | ★★★ |
+| Pyro | Python (PyTorch) | P | SVI, NUTS | 2017 | active | ★★★ (ML) |
+| TensorFlow Probability | Python | E/P | HMC, VI | 2018 | active | ★★★ (library) |
+| BlackJAX, nutpie | Python/JAX, Rust | (samplers only) | NUTS and others | 2021, 2022 | active | ★★ |
+| Turing.jl | Julia | P | NUTS, particle Gibbs, SMC, VI | 2016–18 | very active (pre-1.0) | ★★ |
+| Pigeons.jl | Julia | (engine for Turing/Stan/Blang) | non-reversible parallel tempering | 2023 | active | ★ |
+| Gen.jl | Julia | P | programmable (MCMC/SMC/VI) | 2018 | slowing | ★★ (research) |
+| Infer.NET | C#/.NET | P (compiled to graph) | EP, VMP | 2008 | maintenance | ★ |
+| Birch | standalone (→ C++) | P | SMC, delayed sampling | 2016+ | small, active | ★ |
+
+## Same model, several languages
+
+The "eight schools" model [@gelmanBayesianDataAnalysis2013] is the smallest interesting hierarchical model: $y_j \sim N(\theta_j, \sigma_j^2)$ with known $\sigma_j$, $\theta_j \sim N(\mu, \tau^2)$. (The centred parameterization below is the readable one. For HMC you would normally use the non-centred version, $\theta_j = \mu + \tau \eta_j$, $\eta_j \sim N(0,1)$.) None of these chunks is evaluated.
+
+**JAGS/BUGS (graphical).** Note that BUGS parameterizes the normal by *precision*.
+
+```
+model {
+  for (j in 1:J) {
+    y[j] ~ dnorm(theta[j], 1 / sigma[j]^2)
+    theta[j] ~ dnorm(mu, 1 / tau^2)
+  }
+  mu ~ dnorm(0, 1.0E-4)
+  tau ~ dunif(0, 100)
+}
+```
+
+**Stan (procedural, blocked, typed).**
+
+```stan
+data {
+  int<lower=0> J;
+  vector[J] y;
+  vector<lower=0>[J] sigma;
+}
+parameters {
+  real mu;
+  real<lower=0> tau;
+  vector[J] theta;
+}
+model {
+  mu ~ normal(0, 100);
+  tau ~ cauchy(0, 5);
+  theta ~ normal(mu, tau);
+  y ~ normal(theta, sigma);   // same as: target += normal_lpdf(y | theta, sigma);
+}
+```
+
+**`brms` (formula).**
+
+```r
+brm(y | se(sigma) ~ 1 + (1 | school), data = schools)
+```
+
+**`ulam` (graphical list → Stan).**
+
+```r
+ulam(alist(
+    y ~ dnorm(theta[school], sigma),
+    theta[school] ~ dnorm(mu, tau),
+    mu ~ dnorm(0, 100),
+    tau ~ dexp(1)
+), data = schools)
+```
+
+**greta (embedded graph in R).**
+
+```r
+mu    <- normal(0, 100)
+tau   <- cauchy(0, 5, truncation = c(0, Inf))
+theta <- normal(mu, tau, dim = J)
+distribution(y) <- normal(theta, sigma)
+m <- model(mu, tau, theta)
+draws <- mcmc(m)
+```
+
+**Turing.jl (procedural Julia function).**
+
+```julia
+@model function schools(y, sigma)
+    mu ~ Normal(0, 100)
+    tau ~ truncated(Cauchy(0, 5); lower = 0)
+    theta ~ filldist(Normal(mu, tau), length(y))
+    y ~ MvNormal(theta, Diagonal(sigma .^ 2))
+end
+chain = sample(schools(y, sigma), NUTS(), 1000)
+```
+
+**PyMC (embedded graph in Python).**
+
+```python
+with pm.Model() as schools:
+    mu = pm.Normal("mu", 0, 100)
+    tau = pm.HalfCauchy("tau", 5)
+    theta = pm.Normal("theta", mu, tau, shape=J)
+    pm.Normal("y", theta, sigma, observed=y)
+    idata = pm.sample()
+```
+
+## Existing reviews and comparisons
+
+Some documents that already cover parts of this ground:
+
+* @strumbeljPast2024, "Past, present and future of software for Bayesian inference" (*Statistical Science*; [open access](https://projecteuclid.org/journals/statistical-science/volume-39/issue-1/Past-Present-and-Future-of-Software-for-Bayesian-Inference/10.1214/23-STS907.full), [preprint](https://sites.stat.columbia.edu/gelman/research/published/Bayesian_software_review-8.pdf)). Its authors include developers of Stan, JAGS, INLA, Blang and Birch. The most authoritative recent overview.
+* @lopesBayesian2026, "Bayesian computation in R" ([PDF](https://hedibert.org/wp-content/uploads/2026/05/R-Software-Packages-for-Bayesian-Data-Analysis.pdf)). Course notes collecting book excerpts on Bayesian software history (back to the 1980s) and short descriptions of R packages.
+* The [CRAN Task View: Bayesian Inference](https://cran.r-project.org/view=Bayesian). A comprehensive, regularly updated catalogue of R packages, organized by model type.
+* @berahaJAGS2021, "JAGS, NIMBLE, Stan: a detailed comparison among Bayesian MCMC software" ([arXiv](https://arxiv.org/abs/2107.09357)). Systematic efficiency comparisons on GLMMs, mixtures and other models. Concludes roughly: Stan if you learn only one tool, JAGS for conjugate models, NIMBLE for mixtures.
+* @monnahanFaster2017. Introduces HMC/Stan to ecologists and compares it with JAGS on ecological models.
+* @kulkarniPPL2020, PPL Bench ([arXiv](https://arxiv.org/abs/2010.08886)). A benchmarking framework (from Meta) that compares PPLs on accuracy and speed of convergence, using a common set of models.
+* [posteriordb](https://github.com/stan-dev/posteriordb). A database of reference posteriors (models, data and gold-standard draws) for testing inference algorithms across PPLs.
+* @lunnBUGS2009, "The BUGS project: evolution, critique and future directions". A history and frank critique of BUGS by its developers.
+* @vandemeentIntroduction2018, *An Introduction to Probabilistic Programming* ([arXiv](https://arxiv.org/abs/1809.10756)). A computer-science view of how PPLs are designed and implemented: graph-based vs. evaluation-based languages, which is close to the graphical/procedural distinction used here.
+* The Wikipedia [list of probabilistic programming languages](https://en.wikipedia.org/wiki/Probabilistic_programming). Broad but uneven.
+* **"Rosetta stones"**: the examples from McElreath's *Statistical Rethinking* [@mcelreathStatistical2020] translated into other tools. They are a good way to compare syntax on identical models:
+  [brms + tidyverse](https://bookdown.org/content/4857/) (Solomon Kurz),
+  [PyMC](https://github.com/pymc-devs/pymc-resources),
+  [NumPyro](https://fehiepsi.github.io/rethinking-numpyro/),
+  [Turing.jl](https://github.com/StatisticalRethinkingJulia).
+
+## Practical advice (for this course)
+
+* For **standard hierarchical regression models**, start with `brms` (or `rstanarm` if you want to avoid compilation). Look at the generated Stan code (`stancode()`) to see what is being fitted.
+* When a model doesn't fit a formula, **write it in Stan** (via `cmdstanr`). This is the best-documented and best-diagnosed general option. `ulam` is a gentler on-ramp if you are reading McElreath.
+* You'll meet **BUGS/JAGS** code in older literature and textbooks, so learn to read it. JAGS is still a reasonable choice for models with discrete latent variables, which HMC cannot handle without marginalization. NIMBLE is the modern, extensible descendant of BUGS.
+* If you live in **Python**, use PyMC (or Bambi for formula models), or NumPyro if you want speed and JAX. In **Julia**, use Turing.jl.
+* For **multimodal or otherwise hard posteriors**, or when you need marginal likelihoods, look at Pigeons.jl (which can sample existing Stan or Turing models) or SMC methods.
+
+## Appendix: usage numbers {#sec-numbers}
+
+Collected 24 October 2026. CRAN: downloads from the RStudio/Posit CRAN mirror over the previous 30 days (`cranlogs`). This undercounts in absolute terms but is comparable across packages. PyPI: last-month downloads from [pypistats.org](https://pypistats.org). Both include automated and dependency installs (`rstan` and `cmdstanpy` are heavily inflated by `prophet`). GitHub stars are a rough proxy for developer interest.
+
+| Package | CRAN downloads / month |
+|:--|--:|
+| rstan | 941,708 |
+| glmmTMB | 55,372 |
+| brms | 44,130 |
+| RTMB | 42,086 |
+| rstanarm | 33,267 |
+| MCMCpack | 24,834 |
+| rjags | 21,444 |
+| MCMCglmm | 8,410 |
+| R2jags | 7,069 |
+| runjags | 6,949 |
+| R2WinBUGS | 6,854 |
+| nimble | 5,767 |
+| inlabru | 3,481 |
+| jagsUI | 3,399 |
+| R2OpenBUGS | 2,810 |
+| tmbstan | 1,125 |
+| greta | 808 |
+
+(`cmdstanr`, `rethinking`, `INLA` and `StanEstimators` are not distributed via CRAN.)
+
+| Package | PyPI downloads / month |
+|:--|--:|
+| cmdstanpy | 4,046,653 |
+| pymc | 1,290,321 |
+| numpyro | 960,818 |
+| tensorflow-probability | 852,476 |
+| pystan | 623,590 |
+| pyro-ppl | 609,562 |
+| nutpie | 160,086 |
+| blackjax | 128,178 |
+| bambi | 67,117 |
+
+| Repository | GitHub stars | Created | Last push |
+|:--|--:|:--:|:--:|
+| pymc-devs/pymc | 9,823 | 2009 | 2026-10 |
+| pyro-ppl/pyro | 9,071 | 2017 | 2026-10 |
+| tensorflow/probability | 4,444 | 2017 | 2026-10 |
+| stan-dev/stan | 2,783 | 2013 | 2026-10 |
+| pyro-ppl/numpyro | 2,770 | 2019 | 2026-10 |
+| rmcelreath/rethinking | 2,430 | 2013 | 2026-06 |
+| TuringLang/Turing.jl | 2,262 | 2016 | 2026-10 |
+| probcomp/Gen.jl | 1,854 | 2018 | 2026-06 |
+| dotnet/infer | 1,615 | 2018 | 2026-07 |
+| paul-buerkner/brms | 1,436 | 2015 | 2026-10 |
+| bambinos/bambi | 1,304 | 2016 | 2026-10 |
+| blackjax-devs/blackjax | 1,136 | 2020 | 2026-10 |
+| greta-dev/greta | 609 | 2016 | 2026-10 |
+| stan-dev/rstanarm | 402 | 2013 | 2026-10 |
+| glmmTMB/glmmTMB | 390 | 2015 | 2026-10 |
+| nimble-dev/nimble | 198 | 2014 | 2026-08 |
+| Julia-Tempering/Pigeons.jl | 153 | 2022 | 2026-10 |
+| lawmurray/Birch | 125 | 2016 | 2026-09 |
+| TuringLang/JuliaBUGS.jl | 77 | 2021 | 2026-10 |
+| MultiBUGS/MultiBUGS | 38 | 2017 | 2021-05 |
+| kaskr/tmbstan | 35 | 2017 | 2026-10 |
+| andrjohns/StanEstimators | 29 | 2023 | 2026-07 |
+| UBC-Stat-ML/blangSDK | 25 | 2016 | 2025-11 |
+
+To refresh the CRAN numbers:
+
+```{r}
+#| eval: false
+library(cranlogs)
+pkgs <- c("rstan", "brms", "rstanarm", "glmmTMB", "tmbstan", "RTMB", "rjags",
+          "R2jags", "runjags", "jagsUI", "nimble", "greta", "MCMCglmm",
+          "inlabru", "R2OpenBUGS", "R2WinBUGS", "MCMCpack")
+dl <- cran_downloads(pkgs, when = "last-month")
+sort(tapply(dl$count, dl$package, sum), decreasing = TRUE)
+```
+
+## References

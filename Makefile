@@ -1,6 +1,9 @@
 %.html: %.rmd
 	Rscript -e "rmarkdown::render(\"$<\")"
 
+%.html: %.qmd bayes.bib
+	quarto render $<
+
 %.docx: %.rmd
 	Rscript -e "rmarkdown::render(\"$<\", output_format = \"word_document\")"
 
