@@ -12,11 +12,19 @@ The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https
 
 * Priors: @cromeNovel1996, @carpenterComputational2017, @gelmanPrior2006, @lewandowskiGenerating2009a, @sarmaPrior2020, @bannerUse2020, @lemoineMoving2019, @kallioinenDetecting2022
 * Pinheiro and Bates on covariance matrix parameterizations: @pinheiroUnconstrainedParametrizationsVariancecovariance1996a
-* Pima Indians: @radinDigitalNativesHow2017,smith-morrisReducingDiabetesIndian2004
+* Pima Indians: @radinDigitalNativesHow2017, @smith-morrisReducingDiabetesIndian2004
 * missing data: @vanbuuren2018, @harrell2015
 * visualizing distributions of covariance matrices: @tokudaVisualizingDistributionsCovariance2025
 * high dimensions/concentration of measure?
 * @greenlandDangers2026a
+* Hamiltonian Monte Carlo (roughly from least to most technical):
+    * Richard McElreath, ["Markov Chains: Why Walk When You Can Flow?"](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/) (blog post with animations comparing Metropolis, Gibbs and HMC)
+    * Chi Feng, [interactive MCMC gallery](https://chi-feng.github.io/mcmc-demo/) (watch different samplers explore difficult target distributions in the browser)
+    * Alex Rogozhnikov, ["Hamiltonian Monte Carlo explained"](https://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html) (interactive, light on maths)
+    * @betancourtConceptual2017 (conceptual rather than rigorous; sections 1–4 are the core)
+    * Michael Betancourt, ["Markov Chain Monte Carlo"](https://betanalpha.github.io/assets/case_studies/markov_chain_monte_carlo.html) (case study on MCMC in general and its diagnostics)
+    * @nealMCMC2011 (the standard technical reference; [arXiv preprint](https://arxiv.org/abs/1206.1901))
+
 ##  References
  
 ::: {#refs}

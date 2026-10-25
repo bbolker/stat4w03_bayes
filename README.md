@@ -9,17 +9,40 @@ link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
     al.* (2022)
 -   Pinheiro and Bates on covariance matrix parameterizations: Pinheiro
     and Bates (1996)
--   Pima Indians: Radin (2017),smith-morrisReducingDiabetesIndian2004
+-   Pima Indians: Radin (2017), Smith-Morris (2004)
 -   missing data: van Buuren (2018), Harrell Jr. (2015)
 -   visualizing distributions of covariance matrices: Tokuda *et al.*
     (2025)
 -   high dimensions/concentration of measure?
--   Greenland and Oke (2026) \## References
+-   Greenland and Oke (2026)
+-   Hamiltonian Monte Carlo (roughly from least to most technical):
+    -   Richard McElreath, [“Markov Chains: Why Walk When You Can
+        Flow?”](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/)
+        (blog post with animations comparing Metropolis, Gibbs and HMC)
+    -   Chi Feng, [interactive MCMC
+        gallery](https://chi-feng.github.io/mcmc-demo/) (watch different
+        samplers explore difficult target distributions in the browser)
+    -   Alex Rogozhnikov, [“Hamiltonian Monte Carlo
+        explained”](https://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html)
+        (interactive, light on maths)
+    -   Betancourt (2017) (conceptual rather than rigorous; sections 1–4
+        are the core)
+    -   Michael Betancourt, [“Markov Chain Monte
+        Carlo”](https://betanalpha.github.io/assets/case_studies/markov_chain_monte_carlo.html)
+        (case study on MCMC in general and its diagnostics)
+    -   Neal (2011) (the standard technical reference; [arXiv
+        preprint](https://arxiv.org/abs/1206.1901))
+
+## References
 
 Banner, K.M., Irvine, K.M. and Rodhouse, T.J. (2020) ‘The use of
 Bayesian priors in Ecology: The good, the bad and the not great’,
 *Methods in Ecology and Evolution*, 11(8), pp. 882–889.
 doi:[10.1111/2041-210X.13407](https://doi.org/10.1111/2041-210X.13407).
+
+Betancourt, M. (2017) ‘A conceptual introduction to Hamiltonian Monte
+Carlo’. arXiv.
+doi:[10.48550/arXiv.1701.02434](https://doi.org/10.48550/arXiv.1701.02434).
 
 Carpenter, B. (2017) ‘Computational and statistical issues with uniform
 interval priors’, *Statistical Modeling, Causal Inference, and Social
@@ -61,6 +84,11 @@ correlation matrices based on vines and extended onion method’, *Journal
 of Multivariate Analysis*, 100(9), pp. 1989–2001.
 doi:[10.1016/j.jmva.2009.04.008](https://doi.org/10.1016/j.jmva.2009.04.008).
 
+Neal, R.M. (2011) ‘MCMC using Hamiltonian dynamics’, in Brooks, S. et
+al. (eds) *Handbook of Markov chain Monte Carlo*. Boca Raton, FL:
+Chapman and Hall/CRC, pp. 113–162.
+doi:[10.1201/b10905-6](https://doi.org/10.1201/b10905-6).
+
 Pinheiro, J.C. and Bates, D.M. (1996) ‘Unconstrained parametrizations
 for variance-covariance matrices’, *Statistics and Computing*, 6(3), pp.
 289–296. doi:[10.1007/BF00140873](https://doi.org/10.1007/BF00140873).
@@ -76,6 +104,11 @@ Systems*. New York, NY, USA: Association for Computing Machinery (CHI
 ’20), pp. 1–12.
 doi:[10.1145/3313831.3376377](https://doi.org/10.1145/3313831.3376377).
 
+Smith-Morris, C.M. (2004) ‘Reducing Diabetes in Indian Country: Lessons
+from the Three Domains Influencing Pima Diabetes’, *Human Organization*,
+63(1), pp. 34–46.
+doi:[10.17730/humo.63.1.mfp4tupu29tcvnqm](https://doi.org/10.17730/humo.63.1.mfp4tupu29tcvnqm).
+
 Tokuda, T. *et al.* (2025) ‘Visualizing distributions of covariance
 matrices’, *Journal of Data Science, Statistics, and Visualisation*,
 5(7).
@@ -87,4 +120,4 @@ Chapman & Hall/CRC (Interdisciplinary Statistics Series). Available at:
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-10-15 12:14:27.397992
+Last updated: 2026-10-25 14:47:45.842942
