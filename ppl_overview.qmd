@@ -31,7 +31,10 @@ The categories overlap. NIMBLE does HMC as well as Gibbs, `ulam` is a front end 
 
 * *Gibbs and component-wise samplers* (conjugate updates, slice sampling, adaptive Metropolis on single nodes) need to know the model's conditional-independence structure. In exchange they can handle **discrete parameters** directly and need no gradients. They mix slowly when parameters are strongly correlated.
 * *Hamiltonian Monte Carlo*, especially the No-U-Turn sampler [NUTS, @hoffmanNoUTurn2014], needs only the log posterior density and its gradient, which come from automatic differentiation. It is far more efficient for correlated continuous posteriors and has strong diagnostics (divergences, E-BFMI). It **cannot sample discrete parameters**, which have to be marginalized out by hand, and it struggles with multimodality.
-* *Deterministic approximations*: Laplace approximation (TMB, `glmmTMB`, INLA), variational inference (ADVI, Pathfinder, Pyro/NumPyro SVI), expectation propagation and message passing (Infer.NET).
+* *Laplace approximations*. The term is used in two senses. Both expand the log density to second order around a mode, but they apply it to different integrals:
+  - *Of the whole posterior*: find the posterior mode (the MAP estimate) and approximate the posterior by a multivariate normal whose covariance is the inverse of the negative Hessian at the mode. This is a single optimization, the Bayesian analogue of Wald intervals, although you can also sample from the approximating normal. `rethinking::quap()` (where it is called the "quadratic approximation") and Stan's `laplace` method work this way.
+  - *Over the random effects only* (TMB, `glmmTMB`, INLA, NIMBLE): for each value of the fixed effects or hyperparameters, an *inner* optimization finds the conditional modes of the random effects, and the curvature there approximates the integral over them. An *outer* optimization (or, in INLA, numerical integration) then handles the remaining parameters.
+* *Other deterministic approximations*: variational inference (ADVI, Pathfinder, Pyro/NumPyro SVI), expectation propagation and message passing (Infer.NET).
 * *Population or tempering methods*: sequential Monte Carlo, (non-reversible) parallel tempering [@syedNonreversible2022]. These target multimodal or otherwise difficult posteriors, and can also estimate marginal likelihoods (normalizing constants).
 
 **Model specification: graphical vs. procedural.**
@@ -68,7 +71,7 @@ These tools fit a fixed but broad class of models, typically (generalized) linea
   ), data = d)
   ```
 
-  `quap()` uses a quadratic (Laplace) approximation. `ulam()` translates the same list into Stan code and runs it with `rstan` or `cmdstanr`. The model is not restricted to GLMMs: any model expressible as a list of such statements works, so `ulam` is really a lightweight *graphical* front end to Stan (Category 3). It is designed for teaching and is not on CRAN. Started in 2013, with `ulam` replacing the older `map2stan` around the 2nd edition (2020). Updated occasionally. Widely used in courses (2,400 GitHub stars) but rarely in published research. ★★.
+  `quap()` uses a quadratic (normal) approximation at the posterior mode. This is a Laplace approximation of the whole posterior, with no inner optimization over random effects (see the "Inference engine" paragraph in the introduction). `extract.samples()` draws from the approximating normal distribution. `ulam()` translates the same list into Stan code and runs it with `rstan` or `cmdstanr`. The model is not restricted to GLMMs: any model expressible as a list of such statements works, so `ulam` is really a lightweight *graphical* front end to Stan (Category 3). It is designed for teaching and is not on CRAN. Started in 2013, with `ulam` replacing the older `map2stan` around the 2nd edition (2020). Updated occasionally. Widely used in courses (2,400 GitHub stars) but rarely in published research. ★★.
 * Also worth knowing: `blme` (Bayesian-flavoured MAP estimates for `lme4` models), `MCMCpack` (model-specific samplers, since 2004), and the post-processing ecosystem that most of these share: `posterior`, `bayesplot` [@gabryVisualization2019] and `loo`.
 
 ### Python
@@ -221,7 +224,7 @@ Spec style: **G** = graphical/declarative; **P** = procedural; **E** = embedded 
 | MCMCglmm | R | F | Gibbs/MH | 2010 | maintenance | ★★ |
 | INLA / inlabru | R | F | nested Laplace | 2009 | active | ★★ |
 | Bambi | Python | F | NUTS (PyMC) | 2016 | active | ★★ |
-| rethinking (`quap`, `ulam`) | R | G (→ Stan) | Laplace; NUTS (Stan) | 2013 (`ulam` c. 2019) | occasional updates | ★★ (teaching) |
+| rethinking (`quap`, `ulam`) | R | G (→ Stan) | quadratic approx.; NUTS (Stan) | 2013 (`ulam` c. 2019) | occasional updates | ★★ (teaching) |
 | WinBUGS / OpenBUGS / MultiBUGS | standalone (R interfaces) | G | Gibbs | 1989 / 1997 / 2017 | dormant | ★★ (legacy) |
 | JAGS | C++ (R interfaces) | G | Gibbs, slice | 2007 | maintenance | ★★★ (declining) |
 | NIMBLE | R → C++ | G | configurable: Gibbs, MH, HMC, SMC, Laplace | c. 2015 | active | ★★ |

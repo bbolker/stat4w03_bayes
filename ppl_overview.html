@@ -2422,7 +2422,12 @@ window.Quarto = {
 <ul>
 <li><em>Gibbs and component-wise samplers</em> (conjugate updates, slice sampling, adaptive Metropolis on single nodes) need to know the model’s conditional-independence structure. In exchange they can handle <strong>discrete parameters</strong> directly and need no gradients. They mix slowly when parameters are strongly correlated.</li>
 <li><em>Hamiltonian Monte Carlo</em>, especially the No-U-Turn sampler <span class="citation" data-cites="hoffmanNoUTurn2014">(NUTS, <a href="#ref-hoffmanNoUTurn2014" role="doc-biblioref">Hoffman and Gelman, 2014</a>)</span>, needs only the log posterior density and its gradient, which come from automatic differentiation. It is far more efficient for correlated continuous posteriors and has strong diagnostics (divergences, E-BFMI). It <strong>cannot sample discrete parameters</strong>, which have to be marginalized out by hand, and it struggles with multimodality.</li>
-<li><em>Deterministic approximations</em>: Laplace approximation (TMB, <code>glmmTMB</code>, INLA), variational inference (ADVI, Pathfinder, Pyro/NumPyro SVI), expectation propagation and message passing (Infer.NET).</li>
+<li><em>Laplace approximations</em>. The term is used in two senses. Both expand the log density to second order around a mode, but they apply it to different integrals:
+<ul>
+<li><em>Of the whole posterior</em>: find the posterior mode (the MAP estimate) and approximate the posterior by a multivariate normal whose covariance is the inverse of the negative Hessian at the mode. This is a single optimization, the Bayesian analogue of Wald intervals, although you can also sample from the approximating normal. <code>rethinking::quap()</code> (where it is called the “quadratic approximation”) and Stan’s <code>laplace</code> method work this way.</li>
+<li><em>Over the random effects only</em> (TMB, <code>glmmTMB</code>, INLA, NIMBLE): for each value of the fixed effects or hyperparameters, an <em>inner</em> optimization finds the conditional modes of the random effects, and the curvature there approximates the integral over them. An <em>outer</em> optimization (or, in INLA, numerical integration) then handles the remaining parameters.</li>
+</ul></li>
+<li><em>Other deterministic approximations</em>: variational inference (ADVI, Pathfinder, Pyro/NumPyro SVI), expectation propagation and message passing (Infer.NET).</li>
 <li><em>Population or tempering methods</em>: sequential Monte Carlo, (non-reversible) parallel tempering <span class="citation" data-cites="syedNonreversible2022">(<a href="#ref-syedNonreversible2022" role="doc-biblioref">Syed <em>et al.</em>, 2022</a>)</span>. These target multimodal or otherwise difficult posteriors, and can also estimate marginal likelihoods (normalizing constants).</li>
 </ul>
 <p><strong>Model specification: graphical vs. procedural.</strong></p>
@@ -2453,7 +2458,7 @@ window.Quarto = {
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    mu <span class="ot">&lt;-</span> a <span class="sc">+</span> b <span class="sc">*</span> x,</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    a <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="dv">10</span>), b <span class="sc">~</span> <span class="fu">dnorm</span>(<span class="dv">0</span>, <span class="dv">1</span>), sigma <span class="sc">~</span> <span class="fu">dexp</span>(<span class="dv">1</span>)</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>), <span class="at">data =</span> d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><code>quap()</code> uses a quadratic (Laplace) approximation. <code>ulam()</code> translates the same list into Stan code and runs it with <code>rstan</code> or <code>cmdstanr</code>. The model is not restricted to GLMMs: any model expressible as a list of such statements works, so <code>ulam</code> is really a lightweight <em>graphical</em> front end to Stan (Category 3). It is designed for teaching and is not on CRAN. Started in 2013, with <code>ulam</code> replacing the older <code>map2stan</code> around the 2nd edition (2020). Updated occasionally. Widely used in courses (2,400 GitHub stars) but rarely in published research. ★★.</p></li>
+<p><code>quap()</code> uses a quadratic (normal) approximation at the posterior mode. This is a Laplace approximation of the whole posterior, with no inner optimization over random effects (see the “Inference engine” paragraph in the introduction). <code>extract.samples()</code> draws from the approximating normal distribution. <code>ulam()</code> translates the same list into Stan code and runs it with <code>rstan</code> or <code>cmdstanr</code>. The model is not restricted to GLMMs: any model expressible as a list of such statements works, so <code>ulam</code> is really a lightweight <em>graphical</em> front end to Stan (Category 3). It is designed for teaching and is not on CRAN. Started in 2013, with <code>ulam</code> replacing the older <code>map2stan</code> around the 2nd edition (2020). Updated occasionally. Widely used in courses (2,400 GitHub stars) but rarely in published research. ★★.</p></li>
 <li><p>Also worth knowing: <code>blme</code> (Bayesian-flavoured MAP estimates for <code>lme4</code> models), <code>MCMCpack</code> (model-specific samplers, since 2004), and the post-processing ecosystem that most of these share: <code>posterior</code>, <code>bayesplot</code> <span class="citation" data-cites="gabryVisualization2019">(<a href="#ref-gabryVisualization2019" role="doc-biblioref">Gabry <em>et al.</em>, 2019</a>)</span> and <code>loo</code>.</p></li>
 </ul>
 </section>
@@ -2678,7 +2683,7 @@ window.Quarto = {
 <td style="text-align: left;">rethinking (<code>quap</code>, <code>ulam</code>)</td>
 <td style="text-align: left;">R</td>
 <td style="text-align: center;">G (→ Stan)</td>
-<td style="text-align: left;">Laplace; NUTS (Stan)</td>
+<td style="text-align: left;">quadratic approx.; NUTS (Stan)</td>
 <td style="text-align: center;">2013 (<code>ulam</code> c. 2019)</td>
 <td style="text-align: left;">occasional updates</td>
 <td style="text-align: center;">★★ (teaching)</td>
