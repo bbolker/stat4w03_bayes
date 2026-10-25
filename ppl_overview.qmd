@@ -148,7 +148,7 @@ Spec style: **G** = graphical/declarative; **P** = procedural; **E** = embedded 
 | JAGS | C++ (R interfaces) | G | Gibbs, slice | 2007 | maintenance | ★★★ (declining) |
 | NIMBLE | R → C++ | G | configurable: Gibbs, MH, HMC, SMC, Laplace | c. 2015 | active | ★★ |
 | JuliaBUGS.jl | Julia | G | NUTS, Gibbs | 2021 | active (young) | ★ |
-| Blang | JVM (Xtend) | G | parallel tempering, SMC | c. 2016–19 | research, slow | ★ |
+| Blang | JVM (Xtend) | G | parallel tempering, SMC | c. 2016 | research, slow | ★ |
 | Stan | standalone (C++) | P | NUTS; optim, Laplace, ADVI, Pathfinder | 2012 | very active | ★★★ |
 | tmbstan / RTMB | R / C++ | P | NUTS (Stan) on TMB models | 2018 / 2023 | active | ★ |
 | StanEstimators | R | P (any R function) | Stan algorithms | 2023 | single developer | ★ |
@@ -166,9 +166,13 @@ Spec style: **G** = graphical/declarative; **P** = procedural; **E** = embedded 
 
 ## Same model, several languages
 
-The "eight schools" model [@gelmanBayesianDataAnalysis2013] is the smallest interesting hierarchical model: $y_j \sim N(\theta_j, \sigma_j^2)$ with known $\sigma_j$, $\theta_j \sim N(\mu, \tau^2)$. (The centred parameterization below is the readable one. For HMC you would normally use the non-centred version, $\theta_j = \mu + \tau \eta_j$, $\eta_j \sim N(0,1)$.) None of these chunks is evaluated.
+The "eight schools" model [@gelmanBayesianDataAnalysis2013] is the smallest interesting hierarchical model. Here is the description of the data, as quoted in Randall Pruim's [Stat 341 course notes](https://rpruim.github.io/s341/S21/from-class/notes/53-Rubins-8-Schools.html) (which cite Gelman et al., Sec. 5.5):
 
-**JAGS/BUGS (graphical).** Note that BUGS parameterizes the normal by *precision*.
+> A study was performed for the Educational Testing Service to analyze the effects of special coaching programs for SAT-V (Scholastic Aptitude Test-Verbal) in each of eight high schools. The outcome variable in each study was the score on a special administration of the SAT-V, a standardized multiple choice test administered by the Educational Testing Service and used to help colleges make admissions decisions; the scores can vary between 200 and 800, with mean about 500 and standard deviation about 100. The SAT examinations are designed to be resistant to short-term efforts directed specifically toward improving performance on the test; instead they are designed to reflect knowledge acquired and abilities developed over many years of education. Nevertheless, each of the eight schools in this study considered its short-term coaching program to be very successful at increasing SAT scores. Also, there was no prior reason to believe that any of the eight programs was more effective than any other or that some were more similar in effect to each other than to any other.
+
+The model is $y_j \sim N(\theta_j, \sigma_j^2)$, $\theta_j \sim N(\mu, \tau^2)$, where $y_j$ is the estimated coaching effect in school $j$ and $\sigma_j$ is its (known) standard error. Since the standard deviation of SAT scores is about 100, a Normal(0, 100) prior on the mean coaching effect $\mu$ is a reasonable weak prior: it puts about 95% of its probability on effects between −200 and +200 points, which is still very wide. All of the examples below also use an exponential prior with mean 50 points (rate 1/50) on the between-school standard deviation $\tau$. Most of these tools parameterize the exponential by its rate, but Julia's `Distributions` package uses the scale (mean). (The centred parameterization below is the readable one. For HMC you would normally use the non-centred version, $\theta_j = \mu + \tau \eta_j$, [$\eta_j \sim N(0,1)$.)]{style="white-space: nowrap;"} None of these chunks is evaluated.
+
+**JAGS/BUGS (graphical).** Note that BUGS parameterizes the normal by *precision*. @lebauerTranslating2013 tabulate how the parameterizations of common distributions differ between BUGS and R.
 
 ```
 model {
@@ -176,8 +180,8 @@ model {
     y[j] ~ dnorm(theta[j], 1 / sigma[j]^2)
     theta[j] ~ dnorm(mu, 1 / tau^2)
   }
-  mu ~ dnorm(0, 1.0E-4)
-  tau ~ dunif(0, 100)
+  mu ~ dnorm(0, 1 / 100^2)
+  tau ~ dexp(0.02)
 }
 ```
 
@@ -196,7 +200,7 @@ parameters {
 }
 model {
   mu ~ normal(0, 100);
-  tau ~ cauchy(0, 5);
+  tau ~ exponential(0.02);
   theta ~ normal(mu, tau);
   y ~ normal(theta, sigma);   // same as: target += normal_lpdf(y | theta, sigma);
 }
@@ -205,7 +209,9 @@ model {
 **`brms` (formula).**
 
 ```r
-brm(y | se(sigma) ~ 1 + (1 | school), data = schools)
+brm(y | se(sigma) ~ 1 + (1 | school), data = schools,
+    prior = c(prior(normal(0, 100), class = Intercept),
+              prior(exponential(0.02), class = sd)))
 ```
 
 **`ulam` (graphical list → Stan).**
@@ -215,7 +221,7 @@ ulam(alist(
     y ~ dnorm(theta[school], sigma),
     theta[school] ~ dnorm(mu, tau),
     mu ~ dnorm(0, 100),
-    tau ~ dexp(1)
+    tau ~ dexp(0.02)
 ), data = schools)
 ```
 
@@ -223,7 +229,7 @@ ulam(alist(
 
 ```r
 mu    <- normal(0, 100)
-tau   <- cauchy(0, 5, truncation = c(0, Inf))
+tau   <- exponential(0.02)
 theta <- normal(mu, tau, dim = J)
 distribution(y) <- normal(theta, sigma)
 m <- model(mu, tau, theta)
@@ -235,7 +241,7 @@ draws <- mcmc(m)
 ```julia
 @model function schools(y, sigma)
     mu ~ Normal(0, 100)
-    tau ~ truncated(Cauchy(0, 5); lower = 0)
+    tau ~ Exponential(50)    # scale (mean), not rate
     theta ~ filldist(Normal(mu, tau), length(y))
     y ~ MvNormal(theta, Diagonal(sigma .^ 2))
 end
@@ -247,7 +253,7 @@ chain = sample(schools(y, sigma), NUTS(), 1000)
 ```python
 with pm.Model() as schools:
     mu = pm.Normal("mu", 0, 100)
-    tau = pm.HalfCauchy("tau", 5)
+    tau = pm.Exponential("tau", 0.02)
     theta = pm.Normal("theta", mu, tau, shape=J)
     pm.Normal("y", theta, sigma, observed=y)
     idata = pm.sample()
