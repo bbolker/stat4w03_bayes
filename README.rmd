@@ -5,7 +5,7 @@ output_format: md_document
 csl: harvard-cite-them-right.csl
 ---
 
-The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
+The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6)) ([author's page](https://pdhoff.github.io/book/), with errata/code/data; [CrossValidated question about solutions manual](https://stats.stackexchange.com/q/44016/2126)
 
 ## Miscellaneous refs/links
 

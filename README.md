@@ -1,5 +1,8 @@
 The main text for the course is Hoff (2010) ([McMaster-accessible
 link](https://link.springer.com/book/10.1007/978-0-387-92407-6))
+([author’s page](https://pdhoff.github.io/book/), with errata/code/data;
+[CrossValidated question about solutions
+manual](https://stats.stackexchange.com/q/44016/2126)
 
 ## Miscellaneous refs/links
 
@@ -120,4 +123,4 @@ Chapman & Hall/CRC (Interdisciplinary Statistics Series). Available at:
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-10-25 14:47:45.842942
+Last updated: 2026-10-26 12:48:53.849861
