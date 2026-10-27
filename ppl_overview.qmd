@@ -243,7 +243,7 @@ Spec style: **G** = graphical/declarative; **P** = procedural; **E** = embedded 
 | PyMC | Python | E | NUTS + Gibbs/MH, SMC, VI | c. 2003 (NUTS 2016) | very active | ★★★ |
 | NumPyro | Python (JAX) | P | NUTS, SVI | 2019 | very active | ★★★ |
 | Pyro | Python (PyTorch) | P | SVI, NUTS | 2017 | active | ★★★ (ML) |
-| TensorFlow Probability | Python | E/P | HMC, VI | 2018 | active | ★★★ (library) |
+| TensorFlow Probability | Python | E/P | HMC/NUTS, VI; other MCMC kernels (DIY) | 2018 | active | ★★★ (library) |
 | BlackJAX, nutpie | Python/JAX, Rust | (samplers only) | NUTS and others | 2021, 2022 | active | ★★ |
 | Turing.jl | Julia | P | NUTS, particle Gibbs, SMC, VI | 2016–18 | very active (pre-1.0) | ★★ |
 | Pigeons.jl | Julia | (engine for Turing/Stan/Blang) | non-reversible parallel tempering | 2023 | active | ★ |
