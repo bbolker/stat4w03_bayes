@@ -116,6 +116,40 @@ Roughly from least to most technical:
 - Neal (2011) (the standard technical reference; [arXiv
   preprint](https://arxiv.org/abs/1206.1901))
 
+## Covariance/correlation parameterizations and priors
+
+-   Pinheiro and Bates (1996) (unconstrained parameterizations of
+    covariance matrices, e.g. Cholesky and log-Cholesky)
+-   Lewandowski, Kurowicka and Joe (2009) (the paper behind the LKJ
+    distribution on correlation matrices)
+-   Kristensen, McGillycuddy and Williams (2026) (covariance structures
+    available in `glmmTMB` and how they are parameterized)
+-   Gabry and Goodrich (2026) (the `rstanarm` vignette on mixed models;
+    its “Priors on covariance matrices” section explains the
+    decomposition of covariance matrices used by `rstanarm`’s `decov()`
+    prior)
+-   Tokuda *et al.* (2025) (visualizing distributions of covariance
+    matrices)
+
+## Simulation-based calibration
+
+Roughly from friendliest to most technical:
+
+-   Modrák *et al.* (2026): the `SBC` R package; start with the “Getting
+    Started with SBC” vignette, which includes a deliberately broken
+    model
+-   Stan Development Team (2026) (short chapter with a worked Stan
+    example)
+-   Schad, Betancourt and Vasishth (2021) (SBC as one step in a Bayesian
+    workflow, aimed at applied readers)
+-   Cook, Gelman and Rubin (2006) (the posterior-quantile predecessor of
+    SBC; the core logic is easy to follow here)
+-   Gelman *et al.* (2020) (brief conceptual discussion of SBC in the
+    context of the overall workflow)
+-   Modrák *et al.* (2025) (re-explains SBC clearly; argues for checking
+    derived quantities such as the log-likelihood, not just parameters)
+-   Talts *et al.* (2020) (the original rank-based SBC paper)
+
 ## References
 
 Banner, K.M., Irvine, K.M. and Rodhouse, T.J. (2020) ‘The use of
@@ -152,10 +186,19 @@ Crome, F.H.J., Thomas, M.R. and Moore, L.A. (1996) ‘A Novel Bayesian
 Approach to Assessing Impacts of Rain Forest Logging’, *Ecological
 Applications*, 6, pp. 1104–1123.
 
+Gabry, J. and Goodrich, B. (2026) ‘Estimating generalized (non-)linear
+models with group-specific terms with
+<span class="nocase">rstanarm</span>’.
+<https://mc-stan.org/rstanarm/articles/glmer.html>.
+
 Gelman, A. (2006) ‘Prior distributions for variance parameters in
 hierarchical models (comment on article by Browne and Draper)’,
 *Bayesian Analysis*, 1(3), pp. 515–534.
 doi:[10.1214/06-BA117A](https://doi.org/10.1214/06-BA117A).
+
+Gelman, A. *et al.* (2020) ‘Bayesian Workflow’, *arXiv:2011.01808
+\[stat\]* \[Preprint\]. Available at: <http://arxiv.org/abs/2011.01808>
+(Accessed: 4 November 2020).
 
 Greenland, S. and Oke, J. (2026) ‘Dangers of Bayesian analyses and how
 to address them’. arXiv.
@@ -172,10 +215,15 @@ Kallioinen, N. *et al.* (2022) ‘Detecting and diagnosing prior and
 likelihood sensitivity with power-scaling’. arXiv.
 doi:[10.48550/arXiv.2107.14054](https://doi.org/10.48550/arXiv.2107.14054).
 
+
 Lambert, B. and Vehtari, A. (2022) ‘R<sub>\*</sub>: A Robust MCMC
 Convergence Diagnostic with Uncertainty Using Decision Tree
 Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379.
 doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
+
+Kristensen, K., McGillycuddy, M. and Williams, C. (2026) ‘Covariance
+structures with <span class="nocase">glmmTMB</span>’.
+<https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html>.
 
 Lemoine, N.P. (2019) ‘Moving beyond noninformative priors: Why and how
 to choose weakly informative priors in Bayesian analyses’, *Oikos*,
@@ -187,6 +235,7 @@ correlation matrices based on vines and extended onion method’, *Journal
 of Multivariate Analysis*, 100(9), pp. 1989–2001.
 doi:[10.1016/j.jmva.2009.04.008](https://doi.org/10.1016/j.jmva.2009.04.008).
 
+
 Margossian, C.C. *et al.* (2025) ‘Nested *R̂*: Assessing the convergence
 of Markov chain Monte Carlo when running many short chains’, *Bayesian
 Analysis*, 20(4), pp. 1587–1614.
@@ -196,6 +245,10 @@ Modrák, M. *et al.* (2025) ‘Simulation-based calibration checking for
 Bayesian computation: The choice of test quantities shapes sensitivity’,
 *Bayesian Analysis*, 20(2), pp. 461–488.
 doi:[10.1214/23-BA1404](https://doi.org/10.1214/23-BA1404).
+
+
+Modrák, M. *et al.* (2026) ‘SBC: Simulation based calibration for
+Bayesian models’. <https://hyunjimoon.github.io/SBC/>.
 
 Neal, R.M. (2011) ‘MCMC using Hamiltonian dynamics’, in Brooks, S. et
 al. (eds) *Handbook of Markov chain Monte Carlo*. Boca Raton, FL:
@@ -243,9 +296,14 @@ from the Three Domains Influencing Pima Diabetes’, *Human Organization*,
 63(1), pp. 34–46.
 doi:[10.17730/humo.63.1.mfp4tupu29tcvnqm](https://doi.org/10.17730/humo.63.1.mfp4tupu29tcvnqm).
 
+Stan Development Team (2026) ‘Simulation-based calibration checking’.
+Stan User’s Guide, version 2.40,
+<https://mc-stan.org/docs/stan-users-guide/simulation-based-calibration.html>.
+
 Talts, S. *et al.* (2020) ‘Validating Bayesian Inference Algorithms with
 Simulation-Based Calibration’, *arXiv:1804.06788 \[stat\]* \[Preprint\].
-doi:[10.48550/arXiv.1804.06788](https://doi.org/10.48550/arXiv.1804.06788).
+Available at: <http://arxiv.org/abs/1804.06788> (Accessed: 2 December
+2021).
 
 Tokuda, T. *et al.* (2025) ‘Visualizing distributions of covariance
 matrices’, *Journal of Data Science, Statistics, and Visualisation*,

@@ -75,6 +75,26 @@ Roughly from least to most technical:
 * Michael Betancourt, ["Markov Chain Monte Carlo"](https://betanalpha.github.io/assets/case_studies/markov_chain_monte_carlo.html) (case study on MCMC in general and its diagnostics)
 * @nealMCMC2011 (the standard technical reference; [arXiv preprint](https://arxiv.org/abs/1206.1901))
 
+## Covariance/correlation parameterizations and priors
+
+* @pinheiroUnconstrainedParametrizationsVariancecovariance1996a (unconstrained parameterizations of covariance matrices, e.g. Cholesky and log-Cholesky)
+* @lewandowskiGenerating2009a (the paper behind the LKJ distribution on correlation matrices)
+* @kristensenCovariance2026 (covariance structures available in `glmmTMB` and how they are parameterized)
+* @gabryEstimating2026 (the `rstanarm` vignette on mixed models; its "Priors on covariance matrices" section explains the decomposition of covariance matrices used by `rstanarm`'s `decov()` prior)
+* @tokudaVisualizingDistributionsCovariance2025 (visualizing distributions of covariance matrices)
+
+## Simulation-based calibration
+
+Roughly from friendliest to most technical:
+
+* @modrakSBC2026: the `SBC` R package; start with the "Getting Started with SBC" vignette, which includes a deliberately broken model
+* @stanSBC2026 (short chapter with a worked Stan example)
+* @schadPrincipled2021 (SBC as one step in a Bayesian workflow, aimed at applied readers)
+* @cookValidation2006 (the posterior-quantile predecessor of SBC; the core logic is easy to follow here)
+* @gelmanBayesian2020 (brief conceptual discussion of SBC in the context of the overall workflow)
+* @modrakSimulationBased2025 (re-explains SBC clearly; argues for checking derived quantities such as the log-likelihood, not just parameters)
+* @taltsValidating2020 (the original rank-based SBC paper)
+
 ##  References
  
 ::: {#refs}
