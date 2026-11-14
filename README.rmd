@@ -10,20 +10,61 @@ The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https
 ## Miscellaneous refs/links
 
 
-* Priors: @cromeNovel1996, @carpenterComputational2017, @gelmanPrior2006, @lewandowskiGenerating2009a, @sarmaPrior2020, @bannerUse2020, @lemoineMoving2019, @kallioinenDetecting2022
-* Pinheiro and Bates on covariance matrix parameterizations: @pinheiroUnconstrainedParametrizationsVariancecovariance1996a
+* Priors: @cromeNovel1996, @carpenterComputational2017, @gelmanPrior2006, @sarmaPrior2020, @bannerUse2020, @lemoineMoving2019, @kallioinenDetecting2022
 * Pima Indians: @radinDigitalNativesHow2017, @smith-morrisReducingDiabetesIndian2004
 * missing data: @vanbuuren2018, @harrell2015
-* visualizing distributions of covariance matrices: @tokudaVisualizingDistributionsCovariance2025
 * high dimensions/concentration of measure?
 * @greenlandDangers2026a
-* Hamiltonian Monte Carlo (roughly from least to most technical):
-    * Richard McElreath, ["Markov Chains: Why Walk When You Can Flow?"](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/) (blog post with animations comparing Metropolis, Gibbs and HMC)
-    * Chi Feng, [interactive MCMC gallery](https://chi-feng.github.io/mcmc-demo/) (watch different samplers explore difficult target distributions in the browser)
-    * Alex Rogozhnikov, ["Hamiltonian Monte Carlo explained"](https://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html) (interactive, light on maths)
-    * @betancourtConceptual2017 (conceptual rather than rigorous; sections 1–4 are the core)
-    * Michael Betancourt, ["Markov Chain Monte Carlo"](https://betanalpha.github.io/assets/case_studies/markov_chain_monte_carlo.html) (case study on MCMC in general and its diagnostics)
-    * @nealMCMC2011 (the standard technical reference; [arXiv preprint](https://arxiv.org/abs/1206.1901))
+
+## Priors and parameterizations for covariance/correlation matrices
+
+* @pinheiroUnconstrainedParametrizationsVariancecovariance1996a: unconstrained parameterizations of covariance matrices (Cholesky, log-Cholesky, matrix logarithm, ...)
+* @lewandowskiGenerating2009a: the origin of the LKJ distribution on correlation matrices
+* @chungNondegenerate2013a: weakly regularizing (boundary-avoiding) gamma priors on random-effect standard deviations
+* rstanarm, ["Priors on covariance matrices"](https://mc-stan.org/rstanarm/articles/glmer.html#priors-on-covariance-matrices) (the `decov()` prior: covariance matrix decomposed into scale, simplex and LKJ correlation matrix)
+* glmmTMB vignettes on [covariance structures](https://glmmtmb.github.io/glmmTMB/articles/covstruct.html) and [priors](https://glmmtmb.github.io/glmmTMB/articles/priors.html)
+* @tokudaVisualizingDistributionsCovariance2025: visualizing distributions of covariance matrices (Wishart, inverse-Wishart, LKJ, ...); `VisCov` package
+
+## MCMC diagnostics
+
+We assume the basics (trace plots, R-hat, effective sample size). References in each subsection are ordered roughly from least to most technical.
+
+### Divergences
+
+* Stan, ["How to diagnose and resolve convergence problems: divergent transitions"](https://mc-stan.org/learn-stan/diagnostics-warnings.html#divergent-transitions-after-warmup) (what the warning means and what to try)
+* bayesplot vignette, ["Visual MCMC diagnostics"](https://mc-stan.org/bayesplot/articles/visual-mcmc-diagnostics.html#divergent-transitions) (plotting where divergences occur)
+* @betancourtDiagnosing2017 (the best single reference: the eight-schools funnel, why divergences signal biased inference, and how non-centred parameterization fixes it)
+* @betancourtConceptual2017, section 6.2 (divergences in the theory of HMC; see also [Hamiltonian Monte Carlo](#hamiltonian-monte-carlo) below)
+
+### Other diagnostics (e.g. R-hat)
+
+* @vehtariRankNormalization2021a: rank-normalized, folded R-hat, bulk and tail ESS, rank plots (the version now used by Stan and the `posterior` package); the [online appendix](https://avehtari.github.io/rhat_ess/rhat_ess.html) has code and examples
+* @vatsRevisiting2018: R-hat in terms of effective sample size, with a principled cutoff
+* @margossianNested2025: nested R-hat, for running many short chains (`posterior::rhat_nested()`)
+* @lambertRobust2022: R\*, a convergence diagnostic based on machine-learning classifiers
+* @sailynojaGraphical2022: ECDF plots with simultaneous confidence bands, for rank plots and SBC (below)
+
+### Simulation-based calibration (SBC)
+
+* Stan User's Guide, ["Simulation-Based Calibration Checking"](https://mc-stan.org/docs/stan-users-guide/simulation-based-calibration.html) (begins with "Bayes is calibrated by construction")
+* @nicenboimIntroduction2023, [section 10.2, "Validation of a computed posterior distribution"](https://bruno.nicenboim.me/bayescogsci/ch-custom.html#sec-validSBC) (includes an example where SBC finds a problem)
+* The `SBC` R package (Modrák, Moon, Kim, Säilynoja): vignettes ["Getting started"](https://hyunjimoon.github.io/SBC/articles/SBC.html), ["Small model workflow"](https://hyunjimoon.github.io/SBC/articles/small_model_workflow.html), ["Limits of SBC"](https://hyunjimoon.github.io/SBC/articles/limits_of_SBC.html). Not on CRAN; install with `remotes::install_github("hyunjimoon/SBC")` or from [R-multiverse](https://r-multiverse.r-universe.dev/SBC).
+* @schadPrincipled2021 (SBC as one step in a Bayesian workflow)
+* @cookValidation2006 (the original idea)
+* @taltsValidating2020 (the standard reference)
+* @modrakSimulationBased2025 (the choice of test quantities, e.g. the joint likelihood, determines which problems SBC can detect)
+* @sailynojaPosterior2026 (posterior SBC: checking calibration conditional on the observed data)
+
+## Hamiltonian Monte Carlo
+
+Roughly from least to most technical:
+
+* Richard McElreath, ["Markov Chains: Why Walk When You Can Flow?"](https://elevanth.org/blog/2017/11/28/build-a-better-markov-chain/) (blog post with animations comparing Metropolis, Gibbs and HMC)
+* Chi Feng, [interactive MCMC gallery](https://chi-feng.github.io/mcmc-demo/) (watch different samplers explore difficult target distributions in the browser)
+* Alex Rogozhnikov, ["Hamiltonian Monte Carlo explained"](https://arogozhnikov.github.io/2016/12/19/markov_chain_monte_carlo.html) (interactive, light on maths)
+* @betancourtConceptual2017 (conceptual rather than rigorous; sections 1–4 are the core)
+* Michael Betancourt, ["Markov Chain Monte Carlo"](https://betanalpha.github.io/assets/case_studies/markov_chain_monte_carlo.html) (case study on MCMC in general and its diagnostics)
+* @nealMCMC2011 (the standard technical reference; [arXiv preprint](https://arxiv.org/abs/1206.1901))
 
 ##  References
  
