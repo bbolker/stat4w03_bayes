@@ -8,7 +8,7 @@
 	Rscript -e "rmarkdown::render(\"$<\", output_format = \"word_document\")"
 
 README.md: README.rmd bayes.bib
-	Rscript -e "rmarkdown::render('README.rmd', output_format = 'md_document')"
+	Rscript -e "rmarkdown::render('README.rmd')"
 
 spatiotemporal.md: spatiotemporal.rmd bayes.bib harvard-cite-them-right.csl
 	Rscript -e "rmarkdown::render('spatiotemporal.rmd')"

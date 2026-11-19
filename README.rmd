@@ -1,7 +1,10 @@
 ---
 title: "Course materials for reading course (Bayesian stats)"
 bibliography: "bayes.bib"
-output_format: md_document
+output:
+  md_document:
+    variant: gfm
+    pandoc_args: ["--wrap=none"]
 csl: harvard-cite-them-right.csl
 ---
 
