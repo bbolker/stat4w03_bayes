@@ -7,6 +7,15 @@ csl: harvard-cite-them-right.csl
 
 The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6)) ([author's page](https://pdhoff.github.io/book/), with errata/code/data; [CrossValidated question about solutions manual](https://stats.stackexchange.com/q/44016/2126)
 
+## Schedule
+
+* worked through Hoff (approx 2 chapters/week), followed by
+* probabilistic programming languages
+* Hamiltonian Monte Carlo
+* priors
+* MCMC diagnostics (especially simulation-based calibration); parameterizations and priors for covariance matrices
+* models for spatial and temporal data
+
 ## Miscellaneous refs/links
 
 
