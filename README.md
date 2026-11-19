@@ -1,3 +1,5 @@
+> **Note:** this file is generated from [`README.rmd`](README.rmd) by `make README.md`. Edit the `.rmd`, not this `.md`.
+
 The main text for the course is Hoff (2010) ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6)) ([author’s page](https://pdhoff.github.io/book/), with errata/code/data; [CrossValidated question about solutions manual](https://stats.stackexchange.com/q/44016/2126)
 
 ## Schedule
@@ -311,4 +313,4 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-19 17:40:57.356487
+Last updated: 2026-11-19 17:41:19.519413

@@ -8,6 +8,12 @@ output:
 csl: harvard-cite-them-right.csl
 ---
 
+```{r note, echo = FALSE, results = "asis"}
+if (grepl("^(gfm|markdown)", knitr::pandoc_to())) {
+  cat("> **Note:** this file is generated from [`README.rmd`](README.rmd) by `make README.md`. Edit the `.rmd`, not this `.md`.\n")
+}
+```
+
 The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https://link.springer.com/book/10.1007/978-0-387-92407-6)) ([author's page](https://pdhoff.github.io/book/), with errata/code/data; [CrossValidated question about solutions manual](https://stats.stackexchange.com/q/44016/2126)
 
 ## Schedule
