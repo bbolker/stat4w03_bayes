@@ -30,7 +30,7 @@
   - e.g. AR1 ACF vs PACF
   - unweighted GMRF: link = $`-1`$, diagonal = $`n`$ (Riebler *et al.*, 2016; Morris *et al.*, 2019)
   - or weighted GMRF
-- Nielsen example?
+- Nielsen example? (Nielsen and Bolker, 2024)
 - spatial data processing (Moraga, 2023)
 - log-Gaussian Cox process (Diggle *et al.*, 2013; Simpson *et al.*, 2016; Bachl *et al.*, 2019)
 - INLA/SPDE mesh approach (Rue, Martino and Chopin, 2009; Lindgren, Rue and Lindström, 2011; Lindgren and Rue, 2015; Krainski *et al.*, 2018; Lindgren, Bolin and Rue, 2022)
@@ -133,6 +133,12 @@ Moraga, P. (2023) *Spatial statistics for data science: Theory and practice with
 <div id="ref-morrisBayesian2019" class="csl-entry">
 
 Morris, M. *et al.* (2019) ‘Bayesian hierarchical spatial models: Implementing the Besag York Mollié model in Stan’, *Spatial and Spatio-temporal Epidemiology*, 31, p. 100301. doi:[10.1016/j.sste.2019.100301](https://doi.org/10.1016/j.sste.2019.100301).
+
+</div>
+
+<div id="ref-nielsenOne2024" class="csl-entry">
+
+Nielsen, A. and Bolker, B. (2024) ‘One day RTMB course pre ISEC 2024 in Swansea’. <http://www.nielsensweb.org/swansea2024/>.
 
 </div>
 

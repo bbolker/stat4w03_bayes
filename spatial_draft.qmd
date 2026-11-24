@@ -42,7 +42,7 @@ format:
   - e.g. AR1 ACF vs PACF
   - unweighted GMRF: link = $-1$, diagonal = $n$ [@rieblerIntuitive2016; @morrisBayesian2019]
   - or weighted GMRF
-- Nielsen example?
+- Nielsen example? [@nielsenOne2024]
 - spatial data processing [@moragaSpatial2023]
 - log-Gaussian Cox process [@diggleSpatial2013; @simpsonGoing2016; @bachlInlabru2019]
 - INLA/SPDE mesh approach [@rueApproximate2009; @lindgrenExplicit2011; @lindgrenBayesian2015; @krainskiAdvanced2018; @lindgrenSPDE2022]
