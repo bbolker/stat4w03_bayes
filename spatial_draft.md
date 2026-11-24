@@ -17,7 +17,7 @@
 - what kind of cov/cor structure?
   - we typically need $`|\Sigma|`$ (or <span style="white-space: nowrap;">$`\log|\Sigma|`$)</span> and $`\Sigma^{-1}`$ for MVN computation
   - sometimes $`Q = \Sigma^{-1}`$ is easier, sometimes $`\Sigma`$ is easier.
-- corstruct vignette (Kristensen, McGillycuddy and Williams, 2026)
+- [`glmmTMB` covariance structure vignette](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html) (Kristensen, McGillycuddy and Williams, 2026)
 - time: AR1: cor = $`\rho_0^{\Delta t}`$ (or Ornstein-Uhlenbeck cor = <span style="white-space: nowrap;">$`e^{-\phi \Delta t}`$)</span>
   - OU only covers $`\rho_0 = e^{-\phi} > 0`$; AR1 (integer $`\Delta t`$) also allows $`\rho_0 < 0`$
 - space (continuous): functions must be pos-def (examples) (Rasmussen and Williams, 2006).
