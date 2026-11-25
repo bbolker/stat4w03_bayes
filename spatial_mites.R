@@ -11,7 +11,9 @@ data("mite.env") ## Environmental covariate data
 data("mite.xy")  ## Locations
 
 xy <- mite.xy
-dat <- list(Y=mite[["LRUG"]], X=mite.env[["SubsDens"]], D=as.matrix(dist(xy)))
+dat <- list(Y=mite[["LRUG"]],
+            X=drop(scale(mite.env[["SubsDens"]])),
+            D=as.matrix(dist(xy)))
 param <- list(mu=0, alpha=0, logPhi=0, logSigma=0, omega=numeric(nrow(mite)))
 f <- function(par) {
   getAll(par, dat)
@@ -44,10 +46,16 @@ ggplot(dd, aes(x, y, colour = est)) +
 ## Now with tmbstan
 ## Too lazy to set real priors (!!!)
 ## Set bounds (uniform priors) to keep away from terrible places
+bound <- 3
+npar <- length(obj$env$par)
 chains <- tmbstan(obj,
-        lower = rep(-5, length(obj$env$par)),
-        upper = rep(5, length(obj$env$par)),
+        lower = rep(-bound, npar),
+        upper = rep(bound, npar),
         cores = 4)
+
+diagnostic_posterior(chains, parameters="^[[:alpha:]]+$")
+mcmc_trace(chains, regex_pars = "^[[:alpha:]]+$") + scale_colour_manual(values = palette())
+
 
 ## ------------------------------------------------------------------
 ## Sparse Gauss-Markov random field (GMRF) version
@@ -65,6 +73,9 @@ n <- nrow(xy)
 
 ## Voronoi (Dirichlet) tessellation, clipped to the 2.5 x 10 m study plot
 vor <- deldir(xy$x, xy$y, rw = c(0, 2.5, 0, 10))
+op <- par(mar=c(0,0,0,0)) ## turn off plot margins
+plot(vor)
+par(op) ## reset
 
 ## one row per edge: cells ind1 and ind2 share the edge (x1,y1)-(x2,y2)
 edges <- vor$dirsgs
@@ -80,8 +91,11 @@ edges <- subset(edges, len > 1e-6)
 W <- with(edges,
           sparseMatrix(i = pmin(ind1, ind2), j = pmax(ind1, ind2),
                        x = len/dist, dims = c(n, n), symmetric = TRUE))
+ifun <- function(M) image(M, xlab = "", ylab = "", sub = "")
+ifun(W)
 ## weighted graph Laplacian: omega' G omega = sum of w_ij*(omega_i - omega_j)^2
 G <- as(Diagonal(x = rowSums(W)) - W, "generalMatrix")
+ifun(G)
 ## cell areas
 A <- as(as(Diagonal(x = vor$summary$dir.area), "generalMatrix"), "CsparseMatrix")
 
@@ -112,6 +126,16 @@ fit_gmrf <- with(obj_gmrf, nlminb(par, fn, gr))
 sdr_gmrf <- sdreport(obj_gmrf)
 pl_gmrf <- as.list(sdr_gmrf, "Est")
 plsd_gmrf <- as.list(sdr_gmrf, "Std")
+
+bound <- 3
+npar <- length(obj_gmrf$env$par)
+chains <- tmbstan(obj_gmrf,
+        lower = rep(-bound, npar),
+        upper = rep(bound, npar),
+        cores = 4)
+
+diagnostic_posterior(chains, parameters="^[[:alpha:]]+$")
+mcmc_trace(chains, regex_pars = "^[[:alpha:]]+$") + scale_colour_manual(values = palette())
 
 ## sparsity: fraction of nonzero elements in Q
 Q_hat <- make_Q(pl_gmrf$logKappa, pl_gmrf$logTau)

@@ -20,21 +20,23 @@
 - [`glmmTMB` covariance structure vignette](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html) (Kristensen, McGillycuddy and Williams, 2026)
 - time: AR1: cor = $`\rho_0^{\Delta t}`$ (or Ornstein-Uhlenbeck cor = <span style="white-space: nowrap;">$`e^{-\phi \Delta t}`$)</span>
   - OU only covers $`\rho_0 = e^{-\phi} > 0`$; AR1 (integer $`\Delta t`$) also allows $`\rho_0 < 0`$
-- space (continuous): functions must be pos-def (examples) (Rasmussen and Williams, 2006).
+- space (continuous): functions must be positive definite (examples) (Rasmussen and Williams, 2006).
   - Need to decide on family, shape param (Matérn), scale (Fuglstad *et al.*, 2019)
-  - Kammann and Wand (2003)/`mgcv` (Wood, 2017) trick, scale = max extent)
+  - Kammann and Wand (2003)/`mgcv` (Wood, 2017) trick, scale = maximum extent, i.e. $`\textrm{max}(|x_i-x_j|)`$
   - very crude but gets right order of magnitude; details may not matter if the correlation scale itself is not our focus (we’re just using it as a smoothing term)
-- space (discrete): GMRF (Rue and Held, 2005).
+- space (discrete): Gauss-Markov random field (GMRF) (Rue and Held, 2005).
   - for a MVN distribution, precision $`q_{ij} = 0 \leftrightarrow`$ elements $`i`$ and $`j`$ are conditionally independent
   - concept: total dependence goes through all paths, conditional only through direct links
-  - e.g. AR1 ACF vs PACF
+  - e.g. AR1 autocorrelation (total) vs. partial autocorrelation (conditional) dpendence
   - unweighted GMRF: link = $`-1`$, diagonal = $`n`$ (Riebler *et al.*, 2016; Morris *et al.*, 2019)
-  - or weighted GMRF
-- Nielsen example? (Nielsen and Bolker, 2024)
-- spatial data processing (Moraga, 2023)
+  - or weighted GMRF (based on commuter flows, etc.)
+- spatial examples from Anders Nielsen (Nielsen and Bolker, 2024)
+- spatial data processing is often complicated (Moraga, 2023) …
 - log-Gaussian Cox process (Diggle *et al.*, 2013; Simpson *et al.*, 2016; Bachl *et al.*, 2019)
-- INLA/SPDE mesh approach (Rue, Martino and Chopin, 2009; Lindgren, Rue and Lindström, 2011; Lindgren and Rue, 2015; Krainski *et al.*, 2018; Lindgren, Bolin and Rue, 2022)
+- INLA/spatial PDE mesh approach (Rue, Martino and Chopin, 2009; Lindgren, Rue and Lindström, 2011; Lindgren and Rue, 2015; Krainski *et al.*, 2018; Lindgren, Bolin and Rue, 2022)
 - more efficient forms of Gaussian process, e.g. nearest-neighbour GP (Datta, 2022); `spNNGP` R package (Finley, Datta and Banerjee, 2022)
+
+## Example
 
 ## References
 

@@ -32,21 +32,23 @@ format:
 - [`glmmTMB` covariance structure vignette](https://cran.r-project.org/web/packages/glmmTMB/vignettes/covstruct.html) [@kristensenCovariance2026]
 - time: AR1: cor = $\rho_0^{\Delta t}$ (or Ornstein-Uhlenbeck cor = [$e^{-\phi \Delta t}$)]{style="white-space: nowrap;"}
   - OU only covers $\rho_0 = e^{-\phi} > 0$; AR1 (integer $\Delta t$) also allows $\rho_0 < 0$
-- space (continuous): functions must be pos-def (examples) [@rasmussenGaussian2006].
+- space (continuous): functions must be positive definite (examples) [@rasmussenGaussian2006].
   - Need to decide on family, shape param (Matérn), scale [@fuglstadConstructing2019]
-  - @kammannGeoadditive2003/`mgcv` [@woodGeneralized2017] trick, scale = max extent)
+  - @kammannGeoadditive2003/`mgcv` [@woodGeneralized2017] trick, scale = maximum extent, i.e. $\textrm{max}(|x_i-x_j|)$
   - very crude but gets right order of magnitude; details may not matter if the correlation scale itself is not our focus (we're just using it as a smoothing term)
-- space (discrete): GMRF [@rueGaussian2005].
+- space (discrete): Gauss-Markov random field (GMRF) [@rueGaussian2005].
   - for a MVN distribution, precision $q_{ij} = 0 \leftrightarrow$ elements $i$ and $j$ are conditionally independent
   - concept: total dependence goes through all paths, conditional only through direct links
-  - e.g. AR1 ACF vs PACF
+  - e.g. AR1 autocorrelation (total) vs. partial autocorrelation (conditional) dpendence
   - unweighted GMRF: link = $-1$, diagonal = $n$ [@rieblerIntuitive2016; @morrisBayesian2019]
-  - or weighted GMRF
-- Nielsen example? [@nielsenOne2024]
-- spatial data processing [@moragaSpatial2023]
+  - or weighted GMRF (based on commuter flows, etc.)
+- spatial examples from Anders Nielsen [@nielsenOne2024]
+- spatial data processing is often complicated [@moragaSpatial2023] ...
 - log-Gaussian Cox process [@diggleSpatial2013; @simpsonGoing2016; @bachlInlabru2019]
-- INLA/SPDE mesh approach [@rueApproximate2009; @lindgrenExplicit2011; @lindgrenBayesian2015; @krainskiAdvanced2018; @lindgrenSPDE2022]
+- INLA/spatial PDE mesh approach [@rueApproximate2009; @lindgrenExplicit2011; @lindgrenBayesian2015; @krainskiAdvanced2018; @lindgrenSPDE2022]
 - more efficient forms of Gaussian process, e.g. nearest-neighbour GP [@dattaNearest2022]; `spNNGP` R package [@finleySpNNGP2022]
+
+## Example
 
 ## References
 
