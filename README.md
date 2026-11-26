@@ -98,7 +98,7 @@ Roughly from friendliest to most technical:
 - Harrell “skeptical” priors: <https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580>
 - log-Gaussian Cox processes (Bayes for point processes)
 - INLA (Integrated nested Laplace approximation), SPDE approaches
-- variational inference: (**bleiVariationalInferenceReview2017?**)
+- variational inference: Blei, Kucukelbir and McAuliffe (2017)
 
 ## References
 
@@ -125,6 +125,12 @@ Betancourt, M. (2017b) ‘Diagnosing biased inference with divergences’. Stan 
 <div id="ref-bhadraLassoMeetsHorseshoe2019a" class="csl-entry">
 
 Bhadra, A. *et al.* (2019) ‘Lasso Meets Horseshoe : A Survey’. arXiv. doi:[10.48550/arXiv.1706.10179](https://doi.org/10.48550/arXiv.1706.10179).
+
+</div>
+
+<div id="ref-bleiVariationalInferenceReview2017" class="csl-entry">
+
+Blei, D.M., Kucukelbir, A. and McAuliffe, J.D. (2017) ‘Variational Inference: A Review for Statisticians’, *Journal of the American Statistical Association*, 112(518), pp. 859–877. doi:[10.1080/01621459.2017.1285773](https://doi.org/10.1080/01621459.2017.1285773).
 
 </div>
 
@@ -366,4 +372,4 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-26 12:25:10.286629
+Last updated: 2026-11-26 12:26:30.631239
