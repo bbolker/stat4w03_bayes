@@ -1892,3 +1892,112 @@
   year = {2024},
   howpublished = {\url{http://www.nielsensweb.org/swansea2024/}}
 }
+
+@misc{bhadraLassoMeetsHorseshoe2019a,
+  title = {Lasso {{Meets Horseshoe}} : {{A Survey}}},
+  shorttitle = {Lasso {{Meets Horseshoe}}},
+  author = {Bhadra, Anindya and Datta, Jyotishka and Polson, Nicholas G. and Willard, Brandon T.},
+  year = 2019,
+  month = mar,
+  number = {arXiv:1706.10179},
+  eprint = {1706.10179},
+  primaryclass = {stat},
+  publisher = {arXiv},
+  doi = {10.48550/arXiv.1706.10179},
+  urldate = {2025-01-09},
+  abstract = {The goal of this paper is to contrast and survey the major advances in two of the most commonly used high-dimensional techniques, namely, the Lasso and horseshoe regularization. Lasso is a gold standard for predictor selection while horseshoe is a state-of-the-art Bayesian estimator for sparse signals. Lasso is fast and scalable and uses convex optimization whilst the horseshoe is non-convex. Our novel perspective focuses on three aspects: (i) theoretical optimality in high-dimensional inference for the Gaussian sparse model and beyond, (ii) efficiency and scalability of computation and (iii) methodological development and performance.},
+  archiveprefix = {arXiv},
+  langid = {english},
+  keywords = {Statistics - Methodology},
+  file = {/home/bolker/Zotero/storage/MPTCE996/Bhadra et al. - 2019 - Lasso Meets Horseshoe  A Survey.pdf}
+}
+
+@inproceedings{carvalhoHandlingSparsityHorseshoe2009,
+  title = {Handling {{Sparsity}} via the {{Horseshoe}}},
+  booktitle = {Proceedings of the {{Twelth International Conference}} on {{Artificial Intelligence}} and {{Statistics}}},
+  author = {Carvalho, Carlos M. and Polson, Nicholas G. and Scott, James G.},
+  year = 2009,
+  month = apr,
+  pages = {73--80},
+  publisher = {PMLR},
+  issn = {1938-7228},
+  urldate = {2024-05-08},
+  abstract = {This paper presents a general, fully Bayesian framework for sparse supervised-learning problems based on the horseshoe prior. The horseshoe prior is a member of the family of multivariate scale mixtures of normals, and is therefore closely related to widely used approaches for sparse Bayesian learning, including, among others, Laplacian priors (e.g. the LASSO) and Student-t priors (e.g. the relevance vector machine). The advantages of the horseshoe are its robustness at handling unknown sparsity and large outlying signals. These properties are justifed theoretically via a representation theorem and accompanied by comprehensive empirical experiments that compare its performance to benchmark alternatives.},
+  langid = {english},
+  file = {/home/bolker/Zotero/storage/D44AM5T4/Carvalho et al. - 2009 - Handling Sparsity via the Horseshoe.pdf}
+}
+
+
+@inproceedings{piironenHyperpriorChoiceGlobal2017,
+  title = {On the {{Hyperprior Choice}} for the {{Global Shrinkage Parameter}} in the {{Horseshoe Prior}}},
+  booktitle = {Proceedings of the 20th {{International Conference}} on {{Artificial Intelligence}} and {{Statistics}}},
+  author = {Piironen, Juho and Vehtari, Aki},
+  year = 2017,
+  month = apr,
+  pages = {905--913},
+  publisher = {PMLR},
+  issn = {2640-3498},
+  urldate = {2026-11-26},
+  abstract = {The horseshoe prior has proven to be a noteworthy alternative for sparse Bayesian estimation, but as shown in this paper, the results can be sensitive to the prior choice for the global shrinkage hyperparameter. We argue that the previous default choices are dubious due to their tendency to favor solutions with more unshrunk coefficients than we typically expect a priori. This can lead to bad results if this parameter is not strongly identified by data. We derive the relationship between the global parameter and the effective number of nonzeros in the coefficient vector, and show an easy and intuitive way of setting up the prior for the global parameter based on our prior beliefs about the number of nonzero coefficients in the model. The results on real world data show that one can benefit greatly -- in terms of improved parameter estimates, prediction accuracy, and reduced computation time -- from transforming even a crude guess for the number of nonzero coefficients into the prior for the global parameter using our framework.},
+  langid = {english},
+  file = {/home/bolker/Zotero/storage/4LQCB7KH/Piironen and Vehtari - 2017 - On the Hyperprior Choice for the Global Shrinkage Parameter in the Horseshoe Prior.pdf;/home/bolker/Zotero/storage/HRSEIW39/Piironen and Vehtari - 2017 - On the Hyperprior Choice for the Global Shrinkage Parameter in the Horseshoe Prior.pdf}
+}
+
+@article{piironenSparsityInformationRegularization2017,
+  title = {Sparsity Information and Regularization in the Horseshoe and Other Shrinkage Priors},
+  author = {Piironen, Juho and Vehtari, Aki},
+  year = 2017,
+  month = jan,
+  journal = {Electronic Journal of Statistics},
+  volume = {11},
+  number = {2},
+  pages = {5018--5051},
+  publisher = {{Institute of Mathematical Statistics and Bernoulli Society}},
+  issn = {1935-7524, 1935-7524},
+  doi = {10.1214/17-EJS1337SI},
+  urldate = {2026-11-26},
+  abstract = {The horseshoe prior has proven to be a noteworthy alternative for sparse Bayesian estimation, but has previously suffered from two problems. First, there has been no systematic way of specifying a prior for the global shrinkage hyperparameter based on the prior information about the degree of sparsity in the parameter vector. Second, the horseshoe prior has the undesired property that there is no possibility of specifying separately information about sparsity and the amount of regularization for the largest coefficients, which can be problematic with weakly identified parameters, such as the logistic regression coefficients in the case of data separation. This paper proposes solutions to both of these problems. We introduce a concept of effective number of nonzero parameters, show an intuitive way of formulating the prior for the global hyperparameter based on the sparsity assumptions, and argue that the previous default choices are dubious based on their tendency to favor solutions with more unshrunk parameters than we typically expect a priori. Moreover, we introduce a generalization to the horseshoe prior, called the regularized horseshoe, that allows us to specify a minimum level of regularization to the largest values. We show that the new prior can be considered as the continuous counterpart of the spike-and-slab prior with a finite slab width, whereas the original horseshoe resembles the spike-and-slab with an infinitely wide slab. Numerical experiments on synthetic and real world data illustrate the benefit of both of these theoretical advances.},
+  langid = {english},
+  keywords = {62F15,Bayesian inference,horseshoe prior,shrinkage priors,Sparse estimation},
+  file = {/home/bolker/Zotero/storage/8D9LHY7N/Piironen and Vehtari - 2017 - Sparsity information and regularization in the horseshoe and other shrinkage priors.pdf}
+}
+
+@article{gelmanPriorCanOften2017a,
+  title = {The {{Prior Can Often Only Be Understood}} in the {{Context}} of the {{Likelihood}}},
+  author = {Gelman, Andrew and Simpson, Daniel and Betancourt, Michael},
+  year = 2017,
+  month = oct,
+  journal = {Entropy},
+  volume = {19},
+  number = {10},
+  pages = {555},
+  publisher = {Multidisciplinary Digital Publishing Institute},
+  issn = {1099-4300},
+  doi = {10.3390/e19100555},
+  urldate = {2026-11-26},
+  abstract = {A key sticking point of Bayesian analysis is the choice of prior distribution, and there is a vast literature on potential defaults including uniform priors, Jeffreys' priors, reference priors, maximum entropy priors, and weakly informative priors. These methods, however, often manifest a key conceptual tension in prior modeling: a model encoding true prior information should be chosen without reference to the model of the measurement process, but almost all common prior modeling techniques are implicitly motivated by a reference likelihood. In this paper we resolve this apparent paradox by placing the choice of prior into the context of the entire Bayesian analysis, from inference to prediction to model evaluation.},
+  copyright = {https://creativecommons.org/licenses/by/3.0/},
+  langid = {english},
+  keywords = {Bayesian inference,default priors,prior distribution},
+  file = {/home/bolker/Zotero/storage/N5QTFZGX/Gelman et al. - 2017 - The Prior Can Often Only Be Understood in the Context of the Likelihood.pdf}
+}
+
+@article{simpsonPenalisingModelComponent2017b,
+  title = {Penalising {{Model Component Complexity}}: {{A Principled}}, {{Practical Approach}} to {{Constructing Priors}}},
+  shorttitle = {Penalising {{Model Component Complexity}}},
+  author = {Simpson, Daniel and Rue, H{\aa}vard and Riebler, Andrea and Martins, Thiago G. and S{\o}rbye, Sigrunn H.},
+  year = 2017,
+  month = feb,
+  journal = {Statistical Science},
+  volume = {32},
+  number = {1},
+  pages = {1--28},
+  publisher = {Institute of Mathematical Statistics},
+  issn = {0883-4237, 2168-8745},
+  doi = {10.1214/16-STS576},
+  urldate = {2026-11-26},
+  abstract = {In this paper, we introduce a new concept for constructing prior distributions. We exploit the natural nested structure inherent to many model components, which defines the model component to be a flexible extension of a base model. Proper priors are defined to penalise the complexity induced by deviating from the simpler base model and are formulated after the input of a user-defined scaling parameter for that model component, both in the univariate and the multivariate case. These priors are invariant to reparameterisations, have a natural connection to Jeffreys' priors, are designed to support Occam's razor and seem to have excellent robustness properties, all which are highly desirable and allow us to use this approach to define default prior distributions. Through examples and theoretical results, we demonstrate the appropriateness of this approach and how it can be applied in various situations.},
+  langid = {english},
+  keywords = {Bayesian theory,disease mapping,hierarchical models,information geometry,interpretable prior distributions,prior on correlation matrices},
+  file = {/home/bolker/Zotero/storage/U2B9MHXM/Simpson et al. - 2017 - Penalising Model Component Complexity A Principled, Practical Approach to Constructing Priors.pdf}
+}

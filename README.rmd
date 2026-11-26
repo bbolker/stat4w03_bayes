@@ -32,7 +32,6 @@ The main text for the course is @hoffFirst2010 ([McMaster-accessible link](https
 * Pima Indians: @radinDigitalNativesHow2017, @smith-morrisReducingDiabetesIndian2004
 * missing data: @vanbuuren2018, @harrell2015
 * high dimensions/concentration of measure?
-* @greenlandDangers2026a
 
 ## Priors and parameterizations for covariance/correlation matrices
 
@@ -103,6 +102,14 @@ Roughly from friendliest to most technical:
 * @gelmanBayesian2020 (brief conceptual discussion of SBC in the context of the overall workflow)
 * @modrakSimulationBased2025 (re-explains SBC clearly; argues for checking derived quantities such as the log-likelihood, not just parameters)
 * @taltsValidating2020 (the original rank-based SBC paper)
+
+## Miscellaneous (for 2 December)
+
+* @greenlandDangers2026a
+* horseshoe priors: @carvalhoHandlingSparsityHorseshoe2009, @bhadraLassoMeetsHorseshoe2019a, @piironenSparsityInformationRegularization2017, @piironenHyperpriorChoiceGlobal2017
+* penalized complexity priors: @gelmanPriorCanOften2017a, @simpsonPenalisingModelComponent2017b
+* https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf
+* measures of goodness-of-fit (WAIC, LOOIC, etc.)
 
 ##  References
  

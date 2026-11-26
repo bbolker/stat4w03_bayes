@@ -17,7 +17,6 @@ The main text for the course is Hoff (2010) ([McMaster-accessible link](https://
 - Pima Indians: Radin (2017), Smith-Morris (2004)
 - missing data: van Buuren (2018), Harrell Jr. (2015)
 - high dimensions/concentration of measure?
-- Greenland and Oke (2026)
 
 ## Priors and parameterizations for covariance/correlation matrices
 
@@ -89,6 +88,14 @@ Roughly from friendliest to most technical:
 - Modrák *et al.* (2025) (re-explains SBC clearly; argues for checking derived quantities such as the log-likelihood, not just parameters)
 - Talts *et al.* (2020) (the original rank-based SBC paper)
 
+## Miscellaneous (for 2 December)
+
+- Greenland and Oke (2026)
+- horseshoe priors: Carvalho, Polson and Scott (2009), Bhadra *et al.* (2019), Piironen and Vehtari (2017b), Piironen and Vehtari (2017a)
+- penalized complexity priors: Gelman, Simpson and Betancourt (2017), Simpson *et al.* (2017)
+- <https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf>
+- measures of goodness-of-fit (WAIC, LOOIC, etc.)
+
 ## References
 
 <div id="refs" class="references csl-bib-body">
@@ -111,9 +118,21 @@ Betancourt, M. (2017b) ‘Diagnosing biased inference with divergences’. Stan 
 
 </div>
 
+<div id="ref-bhadraLassoMeetsHorseshoe2019a" class="csl-entry">
+
+Bhadra, A. *et al.* (2019) ‘Lasso Meets Horseshoe : A Survey’. arXiv. doi:[10.48550/arXiv.1706.10179](https://doi.org/10.48550/arXiv.1706.10179).
+
+</div>
+
 <div id="ref-carpenterComputational2017" class="csl-entry">
 
 Carpenter, B. (2017) ‘Computational and statistical issues with uniform interval priors’, *Statistical Modeling, Causal Inference, and Social Science*. Available at: <http://andrewgelman.com/2017/11/28/computational-statistical-issues-uniform-interval-priors/> (Accessed: 15 May 2018).
+
+</div>
+
+<div id="ref-carvalhoHandlingSparsityHorseshoe2009" class="csl-entry">
+
+Carvalho, C.M., Polson, N.G. and Scott, J.G. (2009) ‘Handling Sparsity via the Horseshoe’, in *Proceedings of the Twelth International Conference on Artificial Intelligence and Statistics*. PMLR, pp. 73–80.
 
 </div>
 
@@ -153,6 +172,12 @@ Gelman, A. *et al.* (2020) ‘Bayesian Workflow’, *arXiv:2011.01808 \[stat\]* 
 
 </div>
 
+<div id="ref-gelmanPriorCanOften2017a" class="csl-entry">
+
+Gelman, A., Simpson, D. and Betancourt, M. (2017) ‘The Prior Can Often Only Be Understood in the Context of the Likelihood’, *Entropy*, 19(10), p. 555. doi:[10.3390/e19100555](https://doi.org/10.3390/e19100555).
+
+</div>
+
 <div id="ref-greenlandDangers2026a" class="csl-entry">
 
 Greenland, S. and Oke, J. (2026) ‘Dangers of Bayesian analyses and how to address them’. arXiv. doi:[10.48550/arXiv.2609.14082](https://doi.org/10.48550/arXiv.2609.14082).
@@ -185,7 +210,7 @@ Kristensen, K., McGillycuddy, M. and Williams, C. (2026) ‘Covariance structure
 
 <div id="ref-lambertRobust2022" class="csl-entry">
 
-Lambert, B. and Vehtari, A. (2022) ‘R${_\ast}$: A Robust MCMC Convergence Diagnostic with Uncertainty Using Decision Tree Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379. doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
+Lambert, B. and Vehtari, A. (2022) ‘R$`{_\ast}`$: A Robust MCMC Convergence Diagnostic with Uncertainty Using Decision Tree Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379. doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
 
 </div>
 
@@ -203,7 +228,7 @@ Lewandowski, D., Kurowicka, D. and Joe, H. (2009) ‘Generating random correlati
 
 <div id="ref-margossianNested2025" class="csl-entry">
 
-Margossian, C.C. *et al.* (2025) ‘Nested $\hat{R}$: Assessing the convergence of Markov chain Monte Carlo when running many short chains’, *Bayesian Analysis*, 20(4), pp. 1587–1614. doi:[10.1214/24-BA1453](https://doi.org/10.1214/24-BA1453).
+Margossian, C.C. *et al.* (2025) ‘Nested $`\hat{R}`$: Assessing the convergence of Markov chain Monte Carlo when running many short chains’, *Bayesian Analysis*, 20(4), pp. 1587–1614. doi:[10.1214/24-BA1453](https://doi.org/10.1214/24-BA1453).
 
 </div>
 
@@ -228,6 +253,18 @@ Neal, R.M. (2011) ‘MCMC using Hamiltonian dynamics’, in Brooks, S. et al. (e
 <div id="ref-nicenboimIntroduction2023" class="csl-entry">
 
 Nicenboim, B., Schad, D.J. and Vasishth, S. (2025) *Introduction to Bayesian data analysis for cognitive science*. Boca Raton, FL: Chapman and Hall/CRC (Chapman & Hall/CRC statistics in the social and behavioral sciences). doi:[10.1201/9780429342646](https://doi.org/10.1201/9780429342646).
+
+</div>
+
+<div id="ref-piironenHyperpriorChoiceGlobal2017" class="csl-entry">
+
+Piironen, J. and Vehtari, A. (2017a) ‘On the Hyperprior Choice for the Global Shrinkage Parameter in the Horseshoe Prior’, in *Proceedings of the 20th International Conference on Artificial Intelligence and Statistics*. PMLR, pp. 905–913.
+
+</div>
+
+<div id="ref-piironenSparsityInformationRegularization2017" class="csl-entry">
+
+Piironen, J. and Vehtari, A. (2017b) ‘Sparsity information and regularization in the horseshoe and other shrinkage priors’, *Electronic Journal of Statistics*, 11(2), pp. 5018–5051. doi:[10.1214/17-EJS1337SI](https://doi.org/10.1214/17-EJS1337SI).
 
 </div>
 
@@ -264,6 +301,12 @@ Sarma, A. and Kay, M. (2020) ‘Prior setting in practice: Strategies and ration
 <div id="ref-schadPrincipled2021" class="csl-entry">
 
 Schad, D.J., Betancourt, M. and Vasishth, S. (2021) ‘Toward a principled Bayesian workflow in cognitive science’, *Psychological Methods*, 26(1), pp. 103–126. doi:[10.1037/met0000275](https://doi.org/10.1037/met0000275).
+
+</div>
+
+<div id="ref-simpsonPenalisingModelComponent2017b" class="csl-entry">
+
+Simpson, D. *et al.* (2017) ‘Penalising Model Component Complexity: A Principled, Practical Approach to Constructing Priors’, *Statistical Science*, 32(1), pp. 1–28. doi:[10.1214/16-STS576](https://doi.org/10.1214/16-STS576).
 
 </div>
 
@@ -313,4 +356,4 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-19 17:41:19.519413
+Last updated: 2026-11-26 11:24:59.850248
