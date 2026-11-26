@@ -91,11 +91,14 @@ Roughly from friendliest to most technical:
 ## Miscellaneous (for 2 December)
 
 - Bayes in regulated industries: Greenland and Oke (2026), Lee *et al.* (2026)
-- horseshoe priors: Carvalho, Polson and Scott (2009), Bhadra *et al.* (2019), Piironen and Vehtari (2017b), Piironen and Vehtari (2017a)
-- penalized complexity priors: Gelman, Simpson and Betancourt (2017), Simpson *et al.* (2017)
+- more on priors
+  - horseshoe priors: Carvalho, Polson and Scott (2009), Bhadra *et al.* (2019), Piironen and Vehtari (2017b), Piironen and Vehtari (2017a)
+  - penalized complexity priors: Gelman, Simpson and Betancourt (2017), Simpson *et al.* (2017)
+  - Harrell “skeptical” priors: <https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580>
+  - default `rstanarm` priors: [basic](https://cran.r-universe.dev/articles/rstanarm/priors.html), [covariance matrices](https://mc-stan.org/rstanarm/articles/glmer.html)
+  - weakly regularizing priors (Chung *et al.*, 2013)
 - <https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf>
 - measures of goodness-of-fit (WAIC, LOOIC, etc.)
-- Harrell “skeptical” priors: <https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580>
 - log-Gaussian Cox processes (Bayes for point processes)
 - INLA (Integrated nested Laplace approximation), SPDE approaches
 - variational inference: Blei, Kucukelbir and McAuliffe (2017)
@@ -372,4 +375,4 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-26 12:26:30.631239
+Last updated: 2026-11-26 13:29:10.055479
