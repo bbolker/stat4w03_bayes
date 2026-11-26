@@ -119,6 +119,8 @@ f_gmrf <- function(par) {
   nll <- -dgmrf(omega, mu=0, Q=Q, log=TRUE)
   lambda <- exp(mu+alpha*X+omega)
   nll <- nll-sum(dpois(Y, lambda, log=TRUE))
+  ## add priors (fake)
+  ## nll <- nll - dgamma(logKappa, prior_shape, scale=prior_scale, log = TRUE)
   nll
 }
 obj_gmrf <- MakeADFun(f_gmrf, param_gmrf, random="omega", silent=TRUE)
