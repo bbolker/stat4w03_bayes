@@ -90,11 +90,15 @@ Roughly from friendliest to most technical:
 
 ## Miscellaneous (for 2 December)
 
-- Greenland and Oke (2026)
+- Bayes in regulated industries: Greenland and Oke (2026), Lee *et al.* (2026)
 - horseshoe priors: Carvalho, Polson and Scott (2009), Bhadra *et al.* (2019), Piironen and Vehtari (2017b), Piironen and Vehtari (2017a)
 - penalized complexity priors: Gelman, Simpson and Betancourt (2017), Simpson *et al.* (2017)
 - <https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf>
 - measures of goodness-of-fit (WAIC, LOOIC, etc.)
+- Harrell “skeptical” priors: <https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580>
+- log-Gaussian Cox processes (Bayes for point processes)
+- INLA (Integrated nested Laplace approximation), SPDE approaches
+- variational inference: (**bleiVariationalInferenceReview2017?**)
 
 ## References
 
@@ -211,6 +215,12 @@ Kristensen, K., McGillycuddy, M. and Williams, C. (2026) ‘Covariance structure
 <div id="ref-lambertRobust2022" class="csl-entry">
 
 Lambert, B. and Vehtari, A. (2022) ‘R$`{_\ast}`$: A Robust MCMC Convergence Diagnostic with Uncertainty Using Decision Tree Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379. doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
+
+</div>
+
+<div id="ref-leeEmbracingBayesianMethods2026" class="csl-entry">
+
+Lee, J.J. *et al.* (2026) ‘Embracing Bayesian Methods in Clinical Trials: FDA’s Long-Awaited Draft Guidance’, *JAMA*, 335(19), pp. 1664–1666. doi:[10.1001/jama.2026.4179](https://doi.org/10.1001/jama.2026.4179).
 
 </div>
 
@@ -356,4 +366,4 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-26 11:24:59.850248
+Last updated: 2026-11-26 12:25:10.286629

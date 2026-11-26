@@ -105,11 +105,15 @@ Roughly from friendliest to most technical:
 
 ## Miscellaneous (for 2 December)
 
-* @greenlandDangers2026a
+* Bayes in regulated industries: @greenlandDangers2026a, @leeEmbracingBayesianMethods2026
 * horseshoe priors: @carvalhoHandlingSparsityHorseshoe2009, @bhadraLassoMeetsHorseshoe2019a, @piironenSparsityInformationRegularization2017, @piironenHyperpriorChoiceGlobal2017
 * penalized complexity priors: @gelmanPriorCanOften2017a, @simpsonPenalisingModelComponent2017b
 * https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf
 * measures of goodness-of-fit (WAIC, LOOIC, etc.)
+* Harrell "skeptical" priors: https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580 
+* log-Gaussian Cox processes (Bayes for point processes)
+* INLA (Integrated nested Laplace approximation), SPDE approaches
+* variational inference: @bleiVariationalInferenceReview2017
 
 ##  References
  
