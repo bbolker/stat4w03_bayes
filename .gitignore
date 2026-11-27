@@ -3,5 +3,6 @@
 *.aux
 .#*
 \#*
+.Rhistory
 
 student_projects/
