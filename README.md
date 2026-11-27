@@ -96,10 +96,9 @@ Roughly from friendliest to most technical:
   - penalized complexity priors: Gelman, Simpson and Betancourt (2017), Simpson *et al.* (2017)
   - Harrell “skeptical” priors: <https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580>
   - default `rstanarm` priors: [basic](https://cran.r-universe.dev/articles/rstanarm/priors.html), [covariance matrices](https://mc-stan.org/rstanarm/articles/glmer.html)
-  - weakly regularizing priors (Chung *et al.*, 2013)
-- <https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf>
-- measures of goodness-of-fit (WAIC, LOOIC, etc.)
-- log-Gaussian Cox processes (Bayes for point processes)
+- A paper I’m working on: <https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf>
+- measures of goodness-of-fit (WAIC, LOOIC, etc.): Gelman, Hwang and Vehtari (2014), Hooten and Hobbs (2015), Vehtari (no date)
+- log-Gaussian Cox processes (standard model for spatial point processes)
 - INLA (Integrated nested Laplace approximation), SPDE approaches
 - variational inference: Blei, Kucukelbir and McAuliffe (2017)
 
@@ -185,6 +184,12 @@ Gelman, A. *et al.* (2020) ‘Bayesian Workflow’, *arXiv:2011.01808 \[stat\]* 
 
 </div>
 
+<div id="ref-gelmanUnderstandingPredictiveInformation2014" class="csl-entry">
+
+Gelman, A., Hwang, J. and Vehtari, A. (2014) ‘Understanding predictive information criteria for Bayesian models’, *Statistics and Computing*, 24(6), pp. 997–1016. doi:[10.1007/s11222-013-9416-2](https://doi.org/10.1007/s11222-013-9416-2).
+
+</div>
+
 <div id="ref-gelmanPriorCanOften2017a" class="csl-entry">
 
 Gelman, A., Simpson, D. and Betancourt, M. (2017) ‘The Prior Can Often Only Be Understood in the Context of the Likelihood’, *Entropy*, 19(10), p. 555. doi:[10.3390/e19100555](https://doi.org/10.3390/e19100555).
@@ -209,6 +214,12 @@ Hoff, P.D. (2010) *A first course in Bayesian statistical methods*. Springer.
 
 </div>
 
+<div id="ref-hootenGuideBayesianModel2015" class="csl-entry">
+
+Hooten, M.B. and Hobbs, N.T. (2015) ‘A guide to Bayesian model selection for ecologists’, *Ecological Monographs*, 85(1), pp. 3–28. doi:[10.1890/14-0661.1](https://doi.org/10.1890/14-0661.1).
+
+</div>
+
 <div id="ref-kallioinenDetecting2022" class="csl-entry">
 
 Kallioinen, N. *et al.* (2022) ‘Detecting and diagnosing prior and likelihood sensitivity with power-scaling’. arXiv. doi:[10.48550/arXiv.2107.14054](https://doi.org/10.48550/arXiv.2107.14054).
@@ -223,7 +234,7 @@ Kristensen, K., McGillycuddy, M. and Williams, C. (2026) ‘Covariance structure
 
 <div id="ref-lambertRobust2022" class="csl-entry">
 
-Lambert, B. and Vehtari, A. (2022) ‘R$`{_\ast}`$: A Robust MCMC Convergence Diagnostic with Uncertainty Using Decision Tree Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379. doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
+Lambert, B. and Vehtari, A. (2022) ‘R${_\ast}$: A Robust MCMC Convergence Diagnostic with Uncertainty Using Decision Tree Classifiers’, *Bayesian Analysis*, 17(2), pp. 353–379. doi:[10.1214/20-BA1252](https://doi.org/10.1214/20-BA1252).
 
 </div>
 
@@ -247,7 +258,7 @@ Lewandowski, D., Kurowicka, D. and Joe, H. (2009) ‘Generating random correlati
 
 <div id="ref-margossianNested2025" class="csl-entry">
 
-Margossian, C.C. *et al.* (2025) ‘Nested $`\hat{R}`$: Assessing the convergence of Markov chain Monte Carlo when running many short chains’, *Bayesian Analysis*, 20(4), pp. 1587–1614. doi:[10.1214/24-BA1453](https://doi.org/10.1214/24-BA1453).
+Margossian, C.C. *et al.* (2025) ‘Nested $\hat{R}$: Assessing the convergence of Markov chain Monte Carlo when running many short chains’, *Bayesian Analysis*, 20(4), pp. 1587–1614. doi:[10.1214/24-BA1453](https://doi.org/10.1214/24-BA1453).
 
 </div>
 
@@ -371,8 +382,14 @@ Vehtari, A. *et al.* (2021) ‘Rank-Normalization, Folding, and Localization: <s
 
 </div>
 
+<div id="ref-vehtariCrossvalidationFAQ" class="csl-entry">
+
+Vehtari, A. (no date) ‘Cross-validation FAQ’. Available at: <https://avehtari.github.io/modelselection/CV-FAQ.html> (Accessed: 27 November 2026).
+
+</div>
+
 </div>
 
 ------------------------------------------------------------------------
 
-Last updated: 2026-11-26 13:29:10.055479
+Last updated: 2026-11-27 08:34:05.701437

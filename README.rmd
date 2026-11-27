@@ -111,10 +111,9 @@ Roughly from friendliest to most technical:
     * penalized complexity priors: @gelmanPriorCanOften2017a, @simpsonPenalisingModelComponent2017b
     * Harrell "skeptical" priors: https://discourse.datamethods.org/t/what-are-credible-priors-and-what-are-skeptical-priors/580 
 	* default `rstanarm` priors: [basic](https://cran.r-universe.dev/articles/rstanarm/priors.html), [covariance matrices](https://mc-stan.org/rstanarm/articles/glmer.html)
-	* weakly regularizing priors [@chungNondegenerate2013a]
-* https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf
-* measures of goodness-of-fit (WAIC, LOOIC, etc.)
-* log-Gaussian Cox processes (Bayes for point processes)
+* A paper I'm working on: https://github.com/bbolker/corHMM_RTMB_paper/blob/main/outputs/manuscript.pdf
+* measures of goodness-of-fit (WAIC, LOOIC, etc.): @gelmanUnderstandingPredictiveInformation2014, @hootenGuideBayesianModel2015, @vehtariCrossvalidationFAQ
+* log-Gaussian Cox processes (standard model for spatial point processes)
 * INLA (Integrated nested Laplace approximation), SPDE approaches
 * variational inference: @bleiVariationalInferenceReview2017
 
